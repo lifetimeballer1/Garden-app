@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="My Garden">
+<meta name="theme-color" content="#2c1f0e">
+<title>My Garden</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --soil: #2c1f0e;
+  --soil2: #3d2b1f;
+  --bark: #6b4226;
+  --bark-lt: #9a6040;
+  --moss: #4a5e3a;
+  --moss-lt: #6b8a54;
+  --sun: #e8b84b;
+  --sun-lt: #f5d07a;
+  --cream: #f5f0e8;
+  --cream2: #ede5d8;
+  --mist: #d4e4d0;
+  --ink: #1e1a14;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --tab-h: 68px;
+  --radius: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; background: var(--cream); font-family: 'Courier Prime', monospace; color: var(--ink); overscroll-behavior: none; touch-action: manipulation; }
+body { position: fixed; inset: 0; }
+input, textarea, select, button { font-family: inherit; font-size: 16px; }
+button { cursor: pointer; }
+.shell { display: flex; flex-direction: column; height: 100%; padding-top: var(--safe-top); }
+header { background: var(--soil); color: var(--cream); padding: 14px 18px 12px; flex-shrink: 0; position: relative; overflow: hidden; }
+header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--moss), var(--sun), var(--moss)); }
+.header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+header h1 { font-family: 'Playfair Display', serif; font-size: 1.45rem; line-height: 1; }
+header h1 span { color: var(--sun); font-style: italic; }
+.loc-tag { font-size: .56rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-top: 3px; }
+.header-right { text-align: right; }
+#today-date { font-family: 'Playfair Display', serif; font-size: .9rem; color: var(--sun); }
+#today-day { font-size: .58rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-top: 2px; }
+.crop-pills { display: flex; gap: 6px; margin-top: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.crop-pills::-webkit-scrollbar { display: none; }
+.pill { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); padding: 5px 11px; border-radius: 20px; font-size: .62rem; white-space: nowrap; color: var(--mist); letter-spacing: .5px; }
+.pill-add { background: rgba(232,184,75,.15); border: 1px solid rgba(232,184,75,.3); color: var(--sun); padding: 5px 11px; border-radius: 20px; font-size: .62rem; white-space: nowrap; letter-spacing: .5px; }
+.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 15px; padding-bottom: calc(var(--tab-h) + var(--safe-bottom) + 16px); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; height: calc(var(--tab-h) + var(--safe-bottom)); background: var(--soil); display: flex; padding-top: 4px; padding-bottom: var(--safe-bottom); border-top: 1px solid rgba(255,255,255,.1); z-index: 100; }
+.tab-btn { flex: 1; background: none; border: none; font-size: .53rem; letter-spacing: 1px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: rgba(255,255,255,.38); transition: color .2s; }
+.tab-btn.active { color: var(--sun); }
+.tab-icon { font-size: 1.25rem; }
+.section-label { font-size: .58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--bark); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dashed rgba(107,66,38,.25); }
+.reset-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.progress-wrap { display: flex; align-items: center; gap: 8px; font-size: .68rem; color: var(--bark); }
+.progress-bar { width: 100px; height: 5px; background: rgba(107,66,38,.15); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: var(--moss); transition: width .35s ease; }
+.btn-ghost { background: none; border: 1px solid var(--bark); color: var(--bark); font-size: .62rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 7px 13px; border-radius: 6px; }
+.check-item { display: flex; align-items: flex-start; gap: 13px; padding: 13px 12px; background: white; border-radius: var(--radius); margin-bottom: 6px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.05); border: 1px solid rgba(107,66,38,.07); transition: opacity .2s; }
+.check-item.done { opacity: .42; }
+.check-item.done .item-text { text-decoration: line-through; }
+.checkbox { width: 24px; height: 24px; flex-shrink: 0; border: 2px solid var(--moss); border-radius: 5px; display: flex; align-items: center; justify-content: center; background: white; transition: background .15s; }
+.check-item.done .checkbox { background: var(--moss); }
+.check-item.done .checkbox::after { content: '✓'; color: white; font-size: .85rem; font-weight: 700; }
+.item-content { flex: 1; }
+.item-text { font-size: .88rem; line-height: 1.35; }
+.item-note { font-size: .71rem; color: var(--bark-lt); margin-top: 4px; font-style: italic; line-height: 1.3; }
+.item-tag { display: inline-block; font-size: .52rem; letter-spacing: 1px; padding: 2px 6px; border-radius: 3px; margin-left: 5px; text-transform: uppercase; vertical-align: middle; }
+.tag-water { background: #d0e8f5; color: #1a5f7a; }
+.tag-soil { background: #e8d5c4; color: #6b3a1f; }
+.tag-plant { background: #d4eacc; color: #2d5a1b; }
+.tag-pest { background: #f5e6cc; color: #7a4a0f; }
+.tag-check { background: #e8e0f5; color: #4a3a70; }
+.card { background: white; border-radius: var(--radius); padding: 15px; margin-bottom: 14px; border: 1px solid rgba(107,66,38,.1); }
+.plant-card { background: white; border-radius: var(--radius); border: 1px solid rgba(107,66,38,.1); margin-bottom: 12px; overflow: hidden; }
+.plant-card-header { display: flex; align-items: center; gap: 10px; padding: 13px 14px; background: linear-gradient(135deg, var(--cream2), white); cursor: pointer; }
+.plant-emoji { font-size: 1.6rem; flex-shrink: 0; }
+.plant-name { font-family: 'Playfair Display', serif; font-size: 1rem; }
+.plant-variety { font-size: .65rem; color: var(--bark-lt); margin-top: 1px; }
+.plant-status { margin-left: auto; font-size: .58rem; text-transform: uppercase; letter-spacing: 1.5px; }
+.status-growing { color: var(--moss); }
+.status-watch { color: #c07a00; }
+.chevron { margin-left: 8px; font-size: .7rem; color: var(--bark-lt); transition: transform .2s; }
+.plant-card.open .chevron { transform: rotate(180deg); }
+.plant-body { display: none; padding: 0 14px 14px; border-top: 1px solid rgba(107,66,38,.08); }
+.plant-card.open .plant-body { display: block; padding-top: 12px; }
+.care-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.care-block { background: var(--cream); border-radius: 7px; padding: 10px 11px; border: 1px solid rgba(107,66,38,.1); }
+.care-block-label { font-size: .55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--bark); margin-bottom: 4px; }
+.care-block-val { font-size: .78rem; line-height: 1.35; }
+.care-full { grid-column: 1 / -1; }
+.plant-actions { display: flex; gap: 8px; margin-top: 10px; }
+.btn-edit { flex: 1; background: var(--cream); border: 1px solid rgba(107,66,38,.2); color: var(--bark); font-size: .65rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px; border-radius: 6px; }
+.btn-delete { background: none; border: 1px solid #d9534f; color: #d9534f; font-size: .65rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px 13px; border-radius: 6px; }
+.btn-add-plant { width: 100%; background: var(--moss); color: white; border: none; border-radius: var(--radius); padding: 15px; font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 200; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--cream); border-radius: 16px 16px 0 0; padding: 20px 18px calc(var(--safe-bottom) + 20px); width: 100%; max-height: 90vh; overflow-y: auto; transform: translateY(30px); transition: transform .25s; }
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 16px; }
+.field-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+.field-group label { font-size: .58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--bark); }
+.field-group input, .field-group select, .field-group textarea { padding: 11px 12px; border-radius: 7px; border: 1px solid rgba(107,66,38,.25); background: white; outline: none; width: 100%; font-size: 16px; }
+.field-group textarea { min-height: 70px; resize: none; line-height: 1.5; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-primary { width: 100%; background: var(--moss); color: white; border: none; border-radius: 8px; padding: 15px; font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+.btn-cancel { width: 100%; background: none; border: 1px solid rgba(107,66,38,.25); color: var(--bark); border-radius: 8px; padding: 13px; font-size: .7rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; }
+.rain-entry-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rain-entry-form .field-group { margin-bottom: 0; }
+.btn-add-entry { background: var(--moss); color: white; border: none; border-radius: 7px; padding: 14px; font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; grid-column: 1/-1; }
+.rain-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; background: var(--cream); border-radius: 7px; margin-top: 6px; }
+.rain-row-main { display: flex; flex-direction: column; gap: 2px; }
+.rain-row-date { font-size: .65rem; color: var(--bark-lt); }
+.rain-row-val { font-size: .9rem; font-weight: 700; }
+.btn-del-rain { background: none; border: none; color: rgba(107,66,38,.4); font-size: 1rem; padding: 4px 6px; }
+.empty-rain { font-size: .75rem; color: rgba(107,66,38,.45); font-style: italic; text-align: center; padding: 18px; }
+.rain-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.rain-stat { background: white; border-radius: 8px; padding: 11px 10px; text-align: center; border: 1px solid rgba(107,66,38,.1); }
+.rain-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--moss); }
+.rain-stat-label { font-size: .52rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--bark-lt); margin-top: 3px; }
+.notes-area textarea { min-height: 250px; resize: none; line-height: 1.75; }
+.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 20px; }
+@media (max-width: 600px) { .week-grid { grid-template-columns: repeat(2, 1fr); } }
+.day-col { background: white; border-radius: 7px; overflow: hidden; border: 1px solid rgba(107,66,38,.1); }
+.day-col.today-col .day-header { background: var(--moss); }
+.day-header { background: var(--soil2); color: white; text-align: center; padding: 6px 2px; font-size: .54rem; letter-spacing: 1px; text-transform: uppercase; }
+.day-tasks { padding: 5px; }
+.day-task { font-size: .58rem; padding: 4px 5px; margin-bottom: 3px; border-radius: 3px; line-height: 1.25; }
+.dt-water { background: #d0e8f5; color: #1a5f7a; }
+.dt-pest { background: #f5e6cc; color: #7a4a0f; }
+.dt-check { background: #e8e0f5; color: #4a3a70; }
+.content::-webkit-scrollbar { width: 3px; }
+.content::-webkit-scrollbar-thumb { background: rgba(107,66,38,.2); border-radius: 10px; }
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="header-row">
+    <div>
+      <h1>My <span>Garden</span></h1>
+      <div class="loc-tag">Rogersville · Zone 7b/8a</div>
+    </div>
+    <div class="header-right">
+      <div id="today-date"></div>
+      <div id="today-day"></div>
+    </div>
+  </div>
+  <div class="crop-pills" id="header-pills">
+    <button class="pill-add" onclick="openPlantModal()">+ Add Plant</button>
+  </div>
+</header>
+
+<div class="content">
+  <!-- DAILY -->
+  <div class="tab-panel active" id="tab-daily">
+    <div class="reset-bar">
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="daily-progress-fill"></div></div>
+        <span id="daily-progress-text">0 / 0</span>
+      </div>
+      <button class="btn-ghost" onclick="resetDaily()">↺ Reset</button>
+    </div>
+    <div class="section-label">🌅 Morning Checks</div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Check soil moisture at root depth <span class="item-tag tag-water">Water</span></div><div class="item-note">Finger 2–3" in. Tomatoes/peppers: 12–18" zone. Strawberries: 6–8". Water if dry at depth.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Check rain log — did it rain recently? <span class="item-tag tag-water">Water</span></div><div class="item-note">½"+ in last 24 hrs → skip watering. ¼–½" → check soil first. Log any overnight rain.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Water if needed <span class="item-tag tag-water">Water</span></div><div class="item-note">Base only, deep soak. Tomatoes: 1–1.5" per week. Cucumbers/watermelons: consistent moisture. Avoid wet foliage.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Walk & inspect all plants <span class="item-tag tag-check">Check</span></div><div class="item-note">Look for wilt, yellowing, purple stems, curling, spots, drooping. Early detection = easy fix.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Check undersides of leaves for aphids/eggs <span class="item-tag tag-pest">Pest</span></div><div class="item-note">Ant trails on stems = aphids nearby. Look for sticky honeydew, distorted new growth.</div></div></div>
+    <div class="section-label">☀️ Midday Tasks</div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Tomato suckers — remove below 1st flower cluster <span class="item-tag tag-plant">Plant</span></div><div class="item-note">Suckers grow in the V between main stem and branch. Snap small ones off cleanly.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Train cucumber & watermelon vines <span class="item-tag tag-plant">Plant</span></div><div class="item-note">Guide daily — vines can move 6–12" per day in peak season. Secure loosely.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Check pepper branching — hold fruiting until 12"+ <span class="item-tag tag-plant">Plant</span></div><div class="item-note">Pinch first buds if plant is small. More fruit later from a stronger plant.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Check strawberry runners & fruit <span class="item-tag tag-plant">Plant</span></div><div class="item-note">Pin runners if propagating, cut if not needed. Pick ripe fruit promptly.</div></div></div>
+    <div class="section-label">🌙 Evening</div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Log any rain or watering in Rain tab <span class="item-tag tag-check">Check</span></div><div class="item-note">Accurate log = better watering decisions.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Check ant activity at base of plants <span class="item-tag tag-pest">Pest</span></div><div class="item-note">Reapply DE if disturbed or rained on. Focus on stem bases and soil surface.</div></div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Write observations in Notes <span class="item-tag tag-check">Check</span></div><div class="item-note">Anything notable: new flowers, color changes, pest signs, weather, treatments applied.</div></div></div>
+  </div>
+
+  <!-- PLANTS -->
+  <div class="tab-panel" id="tab-plants">
+    <button class="btn-add-plant" onclick="openPlantModal()">+ Add New Plant</button>
+    <div id="plant-list"></div>
+  </div>
+
+  <!-- RAIN -->
+  <div class="tab-panel" id="tab-rain">
+    <div class="rain-summary" id="rain-summary"></div>
+    <div class="card">
+      <div class="section-label">Log Rain / Watering</div>
+      <div class="rain-entry-form">
+        <div class="field-group"><label>Date</label><input type="date" id="rain-date"></div>
+        <div class="field-group"><label>Amount (in)</label><input type="number" id="rain-amount" step="0.1" min="0" placeholder="0.0"></div>
+        <div class="field-group" style="grid-column:1/-1"><label>Type</label>
+          <select id="rain-type">
+            <option value="rain">☁️ Rainfall</option>
+            <option value="water">💧 Hand Watered</option>
+            <option value="drip">🟢 Drip / Irrigation</option>
+          </select>
+        </div>
+        <button class="btn-add-entry" onclick="addRainEntry()">+ Add Entry</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">All Events (Permanent Log)</div>
+      <div id="rain-entries"><div class="empty-rain">No events logged yet.</div></div>
+    </div>
+  </div>
+
+  <!-- WEEKLY -->
+  <div class="tab-panel" id="tab-weekly">
+    <div class="section-label">This Week's Schedule</div>
+    <div class="week-grid" id="week-grid"></div>
+    <div class="section-label">Plant-Specific Schedule</div>
+    <div id="plant-schedule"></div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="tab-panel" id="tab-notes">
+    <div class="card notes-area">
+      <div class="section-label">Garden Journal</div>
+      <textarea id="garden-notes" placeholder="Log observations, pests, flowering, soil treatments, what's working..."></textarea>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('daily',this)"><span class="tab-icon">☀️</span>Daily</button>
+  <button class="tab-btn" onclick="switchTab('plants',this)"><span class="tab-icon">🌱</span>Plants</button>
+  <button class="tab-btn" onclick="switchTab('rain',this)"><span class="tab-icon">🌧️</span>Rain</button>
+  <button class="tab-btn" onclick="switchTab('weekly',this)"><span class="tab-icon">📅</span>Weekly</button>
+  <button class="tab-btn" onclick="switchTab('notes',this)"><span class="tab-icon">📝</span>Notes</button>
+</nav>
+</div>
+
+<!-- PLANT MODAL -->
+<div class="modal-overlay" id="plant-modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Add Plant</div>
+    <div class="modal-row">
+      <div class="field-group"><label>Emoji Icon</label><input type="text" id="p-emoji" placeholder="🍅" maxlength="4"></div>
+      <div class="field-group"><label>Plant Name</label><input type="text" id="p-name" placeholder="Tomatoes"></div>
+    </div>
+    <div class="field-group"><label>Variety / Notes</label><input type="text" id="p-variety" placeholder="e.g. Cherokee Purple, indeterminate"></div>
+    <div class="modal-row">
+      <div class="field-group"><label>Water Every (days)</label><input type="number" id="p-water-days" placeholder="2" min="1"></div>
+      <div class="field-group"><label>Amount per Watering</label><input type="text" id="p-water-amount" placeholder="1–1.5 inches"></div>
+    </div>
+    <div class="field-group"><label>Fertilize Schedule</label><input type="text" id="p-feed" placeholder="e.g. Every 2 weeks, tomato fert"></div>
+    <div class="modal-row">
+      <div class="field-group"><label>Sun Need</label>
+        <select id="p-sun">
+          <option value="Full Sun (6–8 hrs)">Full Sun (6–8 hrs)</option>
+          <option value="Partial Sun (4–6 hrs)">Partial Sun (4–6 hrs)</option>
+          <option value="Shade">Shade</option>
+        </select>
+      </div>
+      <div class="field-group"><label>Status</label>
+        <select id="p-status">
+          <option value="growing">Growing</option>
+          <option value="watch">Needs Watch</option>
+          <option value="dormant">Dormant</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-group"><label>Pest Risks</label><input type="text" id="p-pest" placeholder="e.g. Aphids, hornworm, spider mites"></div>
+    <div class="field-group"><label>Notes / Tips</label><textarea id="p-notes" placeholder="Pruning, harvest tips, spacing, anything important..."></textarea></div>
+    <button class="btn-primary" id="modal-save-btn" onclick="savePlant()">Save Plant</button>
+    <button class="btn-cancel" onclick="closePlantModal()">Cancel</button>
+  </div>
+</div>
+
+<script>
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DEFAULT_PLANTS=[
+  {id:1,emoji:'🍅',name:'Tomatoes',variety:'Mix — indeterminate & determinate',waterDays:2,waterAmount:'1–1.5 inches deep soak',feed:'Every 2 weeks with tomato fertilizer (once flowering)',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Aphids, tomato hornworm, early blight, blossom end rot',notes:'Remove suckers below first flower cluster. Stake or cage early. Consistent moisture prevents BER. Mulch heavily.'},
+  {id:2,emoji:'🫑',name:'Peppers',variety:'Bell & hot mix',waterDays:3,waterAmount:'1 inch per week',feed:'Every 3 weeks, low nitrogen once fruiting begins',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Aphids, pepper weevil, bacterial spot',notes:'Pinch first flower buds until 12"+ tall and branched. Hot peppers prefer slightly drier soil.'},
+  {id:3,emoji:'🥒',name:'Cucumbers',variety:'Slicing & pickling',waterDays:2,waterAmount:'1 inch, consistent — never let dry out',feed:'Every 2 weeks with balanced fertilizer',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Cucumber beetle, squash vine borer, powdery mildew',notes:'Train vines daily. Harvest at 6–8" for best flavor. Leaving overripe cucumbers signals plant to stop producing.'},
+  {id:4,emoji:'🍉',name:'Watermelons',variety:'Standard & personal size',waterDays:3,waterAmount:'1–2 inches/week, reduce near harvest',feed:'High nitrogen early, switch to low N + high K at fruit set',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Aphids, cucumber beetle, vine borers, squash bugs',notes:'Needs 70–90 days from transplant. Reduce water 1–2 weeks before harvest for sweeter fruit. Thump test: hollow = ripe.'},
+  {id:5,emoji:'🍓',name:'Strawberries',variety:'Everbearing mix',waterDays:2,waterAmount:'1–1.5 inches, avoid wetting crowns',feed:'Monthly with balanced fertilizer',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Slugs, birds, gray mold (botrytis), spider mites',notes:'Pick ripe fruit promptly. Mulch with straw. Pin runners to propagate, cut if not needed.'}
+];
+
+let plants=JSON.parse(localStorage.getItem('gv3_plants')||'null')||DEFAULT_PLANTS;
+let rainEntries=JSON.parse(localStorage.getItem('gv3_rain')||'[]');
+let editingPlantId=null;
+
+function savePlants(){localStorage.setItem('gv3_plants',JSON.stringify(plants));}
+function saveRainData(){localStorage.setItem('gv3_rain',JSON.stringify(rainEntries));}
+
+const now=new Date();
+document.getElementById('today-date').textContent=MONTHS[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+document.getElementById('today-day').textContent=DAYS[now.getDay()];
+
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  document.querySelector('.content').scrollTop=0;
+  if(id==='weekly')buildWeekly();
+}
+
+function toggle(el){el.classList.toggle('done');saveChecks();updateProgress();}
+function updateProgress(){
+  const items=document.querySelectorAll('#tab-daily .check-item');
+  const done=document.querySelectorAll('#tab-daily .check-item.done');
+  const pct=items.length?(done.length/items.length)*100:0;
+  document.getElementById('daily-progress-fill').style.width=pct+'%';
+  document.getElementById('daily-progress-text').textContent=done.length+' / '+items.length;
+}
+function resetDaily(){
+  document.querySelectorAll('#tab-daily .check-item').forEach(el=>el.classList.remove('done'));
+  saveChecks();updateProgress();
+}
+function saveChecks(){
+  const checks=Array.from(document.querySelectorAll('#tab-daily .check-item')).map(el=>el.classList.contains('done'));
+  localStorage.setItem('gv3_daily',JSON.stringify(checks));
+  localStorage.setItem('gv3_last_day',now.toDateString());
+}
+function loadChecks(){
+  if(localStorage.getItem('gv3_last_day')!==now.toDateString())localStorage.removeItem('gv3_daily');
+  const checks=JSON.parse(localStorage.getItem('gv3_daily')||'[]');
+  document.querySelectorAll('#tab-daily .check-item').forEach((el,i)=>{if(checks[i])el.classList.add('done');});
+  updateProgress();
+}
+
+function buildHeaderPills(){
+  const pills=document.getElementById('header-pills');
+  pills.innerHTML='<button class="pill-add" onclick="openPlantModal()">+ Add Plant</button>';
+  plants.forEach(p=>{const s=document.createElement('span');s.className='pill';s.textContent=p.emoji+' '+p.name;pills.appendChild(s);});
+}
+
+function buildPlantList(){
+  const c=document.getElementById('plant-list');
+  if(!plants.length){c.innerHTML='<div class="empty-rain" style="margin-top:20px">No plants yet. Add your first!</div>';return;}
+  c.innerHTML='';
+  plants.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='plant-card';card.id='pc-'+p.id;
+    const sc=p.status==='growing'?'status-growing':'status-watch';
+    const sl=p.status==='growing'?'● Growing':p.status==='watch'?'⚠ Watch':'○ Dormant';
+    card.innerHTML=`<div class="plant-card-header" onclick="togglePlantCard(${p.id})"><div class="plant-emoji">${p.emoji}</div><div><div class="plant-name">${p.name}</div><div class="plant-variety">${p.variety||''}</div></div><div class="plant-status ${sc}">${sl}</div><div class="chevron">▼</div></div><div class="plant-body"><div class="care-grid"><div class="care-block"><div class="care-block-label">💧 Water</div><div class="care-block-val">Every ${p.waterDays} day${p.waterDays>1?'s':''}</div></div><div class="care-block"><div class="care-block-label">📏 Amount</div><div class="care-block-val">${p.waterAmount}</div></div><div class="care-block"><div class="care-block-label">🌿 Fertilize</div><div class="care-block-val">${p.feed}</div></div><div class="care-block"><div class="care-block-label">☀️ Sun</div><div class="care-block-val">${p.sun}</div></div><div class="care-block care-full"><div class="care-block-label">🐛 Pest Risks</div><div class="care-block-val">${p.pest||'—'}</div></div><div class="care-block care-full"><div class="care-block-label">📋 Notes</div><div class="care-block-val">${p.notes||'—'}</div></div></div><div class="plant-actions"><button class="btn-edit" onclick="openEditPlant(${p.id})">✏ Edit</button><button class="btn-delete" onclick="deletePlant(${p.id})">Delete</button></div></div>`;
+    c.appendChild(card);
+  });
+}
+
+function togglePlantCard(id){document.getElementById('pc-'+id).classList.toggle('open');}
+function deletePlant(id){
+  if(!confirm('Remove this plant?'))return;
+  plants=plants.filter(p=>p.id!==id);savePlants();buildPlantList();buildHeaderPills();
+}
+
+function openPlantModal(){
+  editingPlantId=null;
+  document.getElementById('modal-title').textContent='Add Plant';
+  document.getElementById('modal-save-btn').textContent='Save Plant';
+  clearModal();
+  document.getElementById('plant-modal-overlay').classList.add('open');
+}
+function openEditPlant(id){
+  const p=plants.find(x=>x.id===id);if(!p)return;
+  editingPlantId=id;
+  document.getElementById('modal-title').textContent='Edit '+p.name;
+  document.getElementById('modal-save-btn').textContent='Save Changes';
+  document.getElementById('p-emoji').value=p.emoji||'';
+  document.getElementById('p-name').value=p.name||'';
+  document.getElementById('p-variety').value=p.variety||'';
+  document.getElementById('p-water-days').value=p.waterDays||'';
+  document.getElementById('p-water-amount').value=p.waterAmount||'';
+  document.getElementById('p-feed').value=p.feed||'';
+  document.getElementById('p-sun').value=p.sun||'Full Sun (6–8 hrs)';
+  document.getElementById('p-status').value=p.status||'growing';
+  document.getElementById('p-pest').value=p.pest||'';
+  document.getElementById('p-notes').value=p.notes||'';
+  document.getElementById('plant-modal-overlay').classList.add('open');
+}
+function closePlantModal(){document.getElementById('plant-modal-overlay').classList.remove('open');}
+function clearModal(){
+  ['p-emoji','p-name','p-variety','p-water-days','p-water-amount','p-feed','p-pest','p-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('p-sun').value='Full Sun (6–8 hrs)';
+  document.getElementById('p-status').value='growing';
+}
+function savePlant(){
+  const name=document.getElementById('p-name').value.trim();
+  if(!name){alert('Plant name is required.');return;}
+  const plant={id:editingPlantId||Date.now(),emoji:document.getElementById('p-emoji').value.trim()||'🌿',name,variety:document.getElementById('p-variety').value.trim(),waterDays:parseInt(document.getElementById('p-water-days').value)||2,waterAmount:document.getElementById('p-water-amount').value.trim()||'1 inch',feed:document.getElementById('p-feed').value.trim(),sun:document.getElementById('p-sun').value,status:document.getElementById('p-status').value,pest:document.getElementById('p-pest').value.trim(),notes:document.getElementById('p-notes').value.trim()};
+  if(editingPlantId){plants=plants.map(p=>p.id===editingPlantId?plant:p);}else{plants.push(plant);}
+  savePlants();buildPlantList();buildHeaderPills();closePlantModal();
+}
+document.getElementById('plant-modal-overlay').addEventListener('click',function(e){if(e.target===this)closePlantModal();});
+
+function buildRainSummary(){
+  const d7=new Date();d7.setDate(d7.getDate()-7);
+  const d30=new Date();d30.setDate(d30.getDate()-30);
+  let week=0,month=0,total=0;
+  rainEntries.forEach(e=>{const d=new Date(e.date);total+=e.amount;if(d>=d7)week+=e.amount;if(d>=d30)month+=e.amount;});
+  document.getElementById('rain-summary').innerHTML=`<div class="rain-stat"><div class="rain-stat-num">${week.toFixed(1)}"</div><div class="rain-stat-label">Last 7 Days</div></div><div class="rain-stat"><div class="rain-stat-num">${month.toFixed(1)}"</div><div class="rain-stat-label">Last 30 Days</div></div><div class="rain-stat"><div class="rain-stat-num">${total.toFixed(1)}"</div><div class="rain-stat-label">All Time</div></div>`;
+}
+function addRainEntry(){
+  const date=document.getElementById('rain-date').value;
+  const amount=parseFloat(document.getElementById('rain-amount').value);
+  const type=document.getElementById('rain-type').value;
+  if(!date||isNaN(amount)||amount<0){alert('Please fill in a valid date and amount.');return;}
+  rainEntries.unshift({id:Date.now(),date,amount,type});
+  saveRainData();renderRain();buildRainSummary();
+  document.getElementById('rain-amount').value='';
+}
+function deleteRain(id){rainEntries=rainEntries.filter(e=>e.id!==id);saveRainData();renderRain();buildRainSummary();}
+function renderRain(){
+  const c=document.getElementById('rain-entries');
+  if(!rainEntries.length){c.innerHTML='<div class="empty-rain">No events logged yet.</div>';return;}
+  c.innerHTML='';
+  rainEntries.forEach(entry=>{
+    const icon=entry.type==='rain'?'☁️':entry.type==='drip'?'🟢':'💧';
+    const label=entry.type==='rain'?'Rainfall':entry.type==='drip'?'Drip':'Hand watered';
+    const div=document.createElement('div');div.className='rain-row';
+    div.innerHTML=`<div class="rain-row-main"><div class="rain-row-date">${entry.date} · ${label}</div><div class="rain-row-val">${icon} ${entry.amount.toFixed(2)}"</div></div><button class="btn-del-rain" onclick="deleteRain(${entry.id})">✕</button>`;
+    c.appendChild(div);
+  });
+}
+
+const WEEK_DEFAULTS=[['Walk garden','Soil check'],['Tomato suckers','Aphid spray if needed'],['Coffee grounds','Vine training'],['Rain log review','Worm zone check'],['Urine fert diluted','Strawberry check'],['Ant DE treatment','Full vine audit'],['Compost turn','Plan next week']];
+function buildWeekly(){
+  const grid=document.getElementById('week-grid');grid.innerHTML='';
+  const todayIdx=now.getDay();
+  WEEK_DEFAULTS.forEach((tasks,i)=>{
+    const col=document.createElement('div');col.className='day-col'+(i===todayIdx?' today-col':'');
+    col.innerHTML=`<div class="day-header">${DAYS[i].slice(0,3)}</div><div class="day-tasks"><div class="day-task dt-check">${tasks[0]}</div><div class="day-task dt-pest">${tasks[1]}</div></div>`;
+    grid.appendChild(col);
+  });
+  const sched=document.getElementById('plant-schedule');sched.innerHTML='';
+  plants.forEach(p=>{
+    const div=document.createElement('div');div.className='card';
+    div.innerHTML=`<div class="section-label">${p.emoji} ${p.name}</div><div style="font-size:.82rem;line-height:1.7"><b>💧 Water:</b> Every ${p.waterDays} day${p.waterDays>1?'s':''} — ${p.waterAmount}<br><b>🌿 Feed:</b> ${p.feed||'—'}<br><b>🐛 Watch for:</b> ${p.pest||'—'}</div>`;
+    sched.appendChild(div);
+  });
+}
+
+const notesEl=document.getElementById('garden-notes');
+notesEl.addEventListener('input',()=>localStorage.setItem('gv3_notes',notesEl.value));
+function loadNotes(){notesEl.value=localStorage.getItem('gv3_notes')||'';}
+
+document.getElementById('rain-date').value=now.toISOString().split('T')[0];
+buildHeaderPills();buildPlantList();buildRainSummary();renderRain();loadChecks();loadNotes();
+</script>
+</body>
+</html>
