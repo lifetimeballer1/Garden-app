@@ -27,14 +27,60 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --tab-h: 68px;
   --radius: 10px;
+  --card-bg: white;
+  --card-border: rgba(107,66,38,.1);
+  --input-bg: white;
+  --input-border: rgba(107,66,38,.25);
+  --section-label-color: var(--bark);
+  --body-bg: var(--cream);
+  --text-primary: var(--ink);
+  --text-secondary: var(--bark-lt);
+  --tag-water-bg: #d0e8f5; --tag-water-fg: #1a5f7a;
+  --tag-soil-bg: #e8d5c4; --tag-soil-fg: #6b3a1f;
+  --tag-plant-bg: #d4eacc; --tag-plant-fg: #2d5a1b;
+  --tag-pest-bg: #f5e6cc; --tag-pest-fg: #7a4a0f;
+  --tag-check-bg: #e8e0f5; --tag-check-fg: #4a3a70;
+  --tag-fert-bg: #e0f0d4; --tag-fert-fg: #2a5a1a;
+  --tag-weed-bg: #fce8d4; --tag-weed-fg: #7a3a10;
+  --tag-harvest-bg: #fdf0d0; --tag-harvest-fg: #7a5a00;
+}
+body.dark-mode {
+  --soil: #1a1208;
+  --soil2: #241810;
+  --bark: #c09070;
+  --bark-lt: #b08060;
+  --moss: #5a7a48;
+  --moss-lt: #7aaa60;
+  --sun: #e8b84b;
+  --sun-lt: #f5d07a;
+  --cream: #1e1810;
+  --cream2: #2a2018;
+  --mist: #304028;
+  --ink: #f0ead8;
+  --card-bg: #2a2018;
+  --card-border: rgba(200,160,100,.15);
+  --input-bg: #352a1c;
+  --input-border: rgba(200,160,100,.3);
+  --section-label-color: #c09070;
+  --body-bg: #1e1810;
+  --text-primary: #f0ead8;
+  --text-secondary: #b08060;
+  --tag-water-bg: #1a3040; --tag-water-fg: #70c0e8;
+  --tag-soil-bg: #3a2418; --tag-soil-fg: #d09070;
+  --tag-plant-bg: #1e3018; --tag-plant-fg: #80c060;
+  --tag-pest-bg: #3a2810; --tag-pest-fg: #e0a060;
+  --tag-check-bg: #2a2040; --tag-check-fg: #c0a0f0;
+  --tag-fert-bg: #202e14; --tag-fert-fg: #90d060;
+  --tag-weed-bg: #3a2010; --tag-weed-fg: #e08040;
+  --tag-harvest-bg: #302808; --tag-harvest-fg: #e0c040;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; overflow: hidden; background: var(--cream); font-family: 'Courier Prime', monospace; color: var(--ink); overscroll-behavior: none; touch-action: manipulation; }
+html, body { height: 100%; overflow: hidden; background: var(--body-bg); font-family: 'Courier Prime', monospace; color: var(--text-primary); overscroll-behavior: none; touch-action: manipulation; transition: background .3s, color .3s; }
 body { position: fixed; inset: 0; }
-input, textarea, select, button { font-family: inherit; font-size: 16px; }
+input, textarea, select, button { font-family: inherit; font-size: 16px; color: var(--text-primary); }
 button { cursor: pointer; }
 .shell { display: flex; flex-direction: column; height: 100%; padding-top: var(--safe-top); }
-header { background: var(--soil); color: var(--cream); padding: 14px 18px 12px; flex-shrink: 0; position: relative; overflow: hidden; }
+header { background: var(--soil); color: var(--cream); padding: 14px 18px 12px; flex-shrink: 0; position: relative; overflow: hidden; transition: background .3s; }
 header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--moss), var(--sun), var(--moss)); }
 .header-row { display: flex; justify-content: space-between; align-items: flex-start; }
 header h1 { font-family: 'Playfair Display', serif; font-size: 1.45rem; line-height: 1; }
@@ -53,115 +99,115 @@ header h1 span { color: var(--sun); font-style: italic; }
 .content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 15px; padding-bottom: calc(var(--tab-h) + var(--safe-bottom) + 16px); }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
-.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; height: calc(var(--tab-h) + var(--safe-bottom)); background: var(--soil); display: flex; padding-top: 4px; padding-bottom: var(--safe-bottom); border-top: 1px solid rgba(255,255,255,.1); z-index: 100; }
-.tab-btn { flex: 1; background: none; border: none; font-size: .53rem; letter-spacing: 1px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: rgba(255,255,255,.38); transition: color .2s; }
+.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; height: calc(var(--tab-h) + var(--safe-bottom)); background: var(--soil); display: flex; padding-top: 4px; padding-bottom: var(--safe-bottom); border-top: 1px solid rgba(255,255,255,.1); z-index: 100; transition: background .3s; }
+.tab-btn { flex: 1; background: none; border: none; font-size: .48rem; letter-spacing: 1px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: rgba(255,255,255,.38); transition: color .2s; }
 .tab-btn.active { color: var(--sun); }
-.tab-icon { font-size: 1.25rem; }
-.section-label { font-size: .58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--bark); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dashed rgba(107,66,38,.25); }
+.tab-icon { font-size: 1.1rem; }
+.section-label { font-size: .58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--section-label-color); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dashed rgba(107,66,38,.25); }
 .reset-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .progress-wrap { display: flex; align-items: center; gap: 8px; font-size: .68rem; color: var(--bark); }
 .progress-bar { width: 100px; height: 5px; background: rgba(107,66,38,.15); border-radius: 4px; overflow: hidden; }
 .progress-fill { height: 100%; width: 0%; background: var(--moss); transition: width .35s ease; }
 .btn-ghost { background: none; border: 1px solid var(--bark); color: var(--bark); font-size: .62rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 7px 13px; border-radius: 6px; }
-.check-item { display: flex; align-items: flex-start; gap: 13px; padding: 13px 12px; background: white; border-radius: var(--radius); margin-bottom: 6px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.05); border: 1px solid rgba(107,66,38,.07); transition: opacity .2s; }
+.check-item { display: flex; align-items: flex-start; gap: 13px; padding: 13px 12px; background: var(--card-bg); border-radius: var(--radius); margin-bottom: 6px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.05); border: 1px solid var(--card-border); transition: opacity .2s, background .3s; }
 .check-item.done { opacity: .42; }
 .check-item.done .item-text { text-decoration: line-through; }
-.checkbox { width: 24px; height: 24px; flex-shrink: 0; border: 2px solid var(--moss); border-radius: 5px; display: flex; align-items: center; justify-content: center; background: white; transition: background .15s; }
+.checkbox { width: 24px; height: 24px; flex-shrink: 0; border: 2px solid var(--moss); border-radius: 5px; display: flex; align-items: center; justify-content: center; background: var(--input-bg); transition: background .15s; }
 .check-item.done .checkbox { background: var(--moss); }
 .check-item.done .checkbox::after { content: '✓'; color: white; font-size: .85rem; font-weight: 700; }
 .item-content { flex: 1; }
-.item-text { font-size: .88rem; line-height: 1.35; }
-.item-note { font-size: .71rem; color: var(--bark-lt); margin-top: 4px; font-style: italic; line-height: 1.3; }
+.item-text { font-size: .88rem; line-height: 1.35; color: var(--text-primary); }
+.item-note { font-size: .71rem; color: var(--text-secondary); margin-top: 4px; font-style: italic; line-height: 1.3; }
 .item-tag { display: inline-block; font-size: .52rem; letter-spacing: 1px; padding: 2px 6px; border-radius: 3px; margin-left: 5px; text-transform: uppercase; vertical-align: middle; }
-.tag-water { background: #d0e8f5; color: #1a5f7a; }
-.tag-soil { background: #e8d5c4; color: #6b3a1f; }
-.tag-plant { background: #d4eacc; color: #2d5a1b; }
-.tag-pest { background: #f5e6cc; color: #7a4a0f; }
-.tag-check { background: #e8e0f5; color: #4a3a70; }
-.tag-ai { background: #d4f0e8; color: #1a5a3a; }
-.card { background: white; border-radius: var(--radius); padding: 15px; margin-bottom: 14px; border: 1px solid rgba(107,66,38,.1); }
-.plant-card { background: white; border-radius: var(--radius); border: 1px solid rgba(107,66,38,.1); margin-bottom: 12px; overflow: hidden; }
-.plant-card-header { display: flex; align-items: center; gap: 10px; padding: 13px 14px; background: linear-gradient(135deg, var(--cream2), white); cursor: pointer; }
+.tag-water { background: var(--tag-water-bg); color: var(--tag-water-fg); }
+.tag-soil { background: var(--tag-soil-bg); color: var(--tag-soil-fg); }
+.tag-plant { background: var(--tag-plant-bg); color: var(--tag-plant-fg); }
+.tag-pest { background: var(--tag-pest-bg); color: var(--tag-pest-fg); }
+.tag-check { background: var(--tag-check-bg); color: var(--tag-check-fg); }
+.tag-fert { background: var(--tag-fert-bg); color: var(--tag-fert-fg); }
+.tag-weed { background: var(--tag-weed-bg); color: var(--tag-weed-fg); }
+.tag-harvest { background: var(--tag-harvest-bg); color: var(--tag-harvest-fg); }
+.card { background: var(--card-bg); border-radius: var(--radius); padding: 15px; margin-bottom: 14px; border: 1px solid var(--card-border); transition: background .3s; }
+.plant-card { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--card-border); margin-bottom: 12px; overflow: hidden; transition: background .3s; }
+.plant-card-header { display: flex; align-items: center; gap: 10px; padding: 13px 14px; background: linear-gradient(135deg, var(--cream2), var(--card-bg)); cursor: pointer; }
 .plant-emoji { font-size: 1.6rem; flex-shrink: 0; }
-.plant-name { font-family: 'Playfair Display', serif; font-size: 1rem; }
-.plant-variety { font-size: .65rem; color: var(--bark-lt); margin-top: 1px; }
+.plant-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text-primary); }
+.plant-variety { font-size: .65rem; color: var(--text-secondary); margin-top: 1px; }
 .plant-status { margin-left: auto; font-size: .58rem; text-transform: uppercase; letter-spacing: 1.5px; }
 .status-growing { color: var(--moss); }
 .status-watch { color: #c07a00; }
-.chevron { margin-left: 8px; font-size: .7rem; color: var(--bark-lt); transition: transform .2s; }
+.chevron { margin-left: 8px; font-size: .7rem; color: var(--text-secondary); transition: transform .2s; }
 .plant-card.open .chevron { transform: rotate(180deg); }
-.plant-body { display: none; padding: 0 14px 14px; border-top: 1px solid rgba(107,66,38,.08); }
+.plant-body { display: none; padding: 0 14px 14px; border-top: 1px solid var(--card-border); }
 .plant-card.open .plant-body { display: block; padding-top: 12px; }
 .care-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-.care-block { background: var(--cream); border-radius: 7px; padding: 10px 11px; border: 1px solid rgba(107,66,38,.1); }
-.care-block-label { font-size: .55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--bark); margin-bottom: 4px; }
-.care-block-val { font-size: .78rem; line-height: 1.35; }
+.care-block { background: var(--cream2); border-radius: 7px; padding: 10px 11px; border: 1px solid var(--card-border); transition: background .3s; }
+.care-block-label { font-size: .55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--section-label-color); margin-bottom: 4px; }
+.care-block-val { font-size: .78rem; line-height: 1.35; color: var(--text-primary); }
 .care-full { grid-column: 1 / -1; }
 .plant-actions { display: flex; gap: 8px; margin-top: 10px; }
-.btn-edit { flex: 1; background: var(--cream); border: 1px solid rgba(107,66,38,.2); color: var(--bark); font-size: .65rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px; border-radius: 6px; }
+.btn-edit { flex: 1; background: var(--cream2); border: 1px solid var(--card-border); color: var(--bark); font-size: .65rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px; border-radius: 6px; }
 .btn-delete { background: none; border: 1px solid #d9534f; color: #d9534f; font-size: .65rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px 13px; border-radius: 6px; }
 .btn-add-plant { width: 100%; background: var(--moss); color: white; border: none; border-radius: var(--radius); padding: 15px; font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-/* PLANT SEARCH AUTOCOMPLETE */
 .plant-search-wrap { position: relative; margin-bottom: 14px; }
-.plant-search-wrap input { width: 100%; padding: 11px 12px; border-radius: 7px; border: 1px solid rgba(107,66,38,.25); background: white; outline: none; font-size: 16px; }
-.autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid rgba(107,66,38,.2); border-top: none; border-radius: 0 0 7px 7px; max-height: 200px; overflow-y: auto; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
-.autocomplete-item { padding: 10px 12px; cursor: pointer; font-size: .85rem; border-bottom: 1px solid rgba(107,66,38,.07); display: flex; align-items: center; gap: 8px; }
+.plant-search-wrap input { width: 100%; padding: 11px 12px; border-radius: 7px; border: 1px solid var(--input-border); background: var(--input-bg); outline: none; font-size: 16px; }
+.autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--card-bg); border: 1px solid var(--input-border); border-top: none; border-radius: 0 0 7px 7px; max-height: 200px; overflow-y: auto; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+.autocomplete-item { padding: 10px 12px; cursor: pointer; font-size: .85rem; border-bottom: 1px solid var(--card-border); display: flex; align-items: center; gap: 8px; color: var(--text-primary); }
 .autocomplete-item:hover, .autocomplete-item.selected { background: var(--cream2); }
 .autocomplete-item:last-child { border-bottom: none; }
 .db-tag { font-size: .5rem; background: var(--mist); color: var(--moss); padding: 2px 5px; border-radius: 3px; letter-spacing: 1px; text-transform: uppercase; margin-left: auto; }
-
-/* MODAL */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 200; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal { background: var(--cream); border-radius: 16px 16px 0 0; padding: 20px 18px calc(var(--safe-bottom) + 20px); width: 100%; max-height: 90vh; overflow-y: auto; transform: translateY(30px); transition: transform .25s; }
+.modal { background: var(--cream); border-radius: 16px 16px 0 0; padding: 20px 18px calc(var(--safe-bottom) + 20px); width: 100%; max-height: 90vh; overflow-y: auto; transform: translateY(30px); transition: transform .25s, background .3s; }
 .modal-overlay.open .modal { transform: translateY(0); }
-.modal-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 16px; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 16px; color: var(--text-primary); }
 .field-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
-.field-group label { font-size: .58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--bark); }
-.field-group input, .field-group select, .field-group textarea { padding: 11px 12px; border-radius: 7px; border: 1px solid rgba(107,66,38,.25); background: white; outline: none; width: 100%; font-size: 16px; }
+.field-group label { font-size: .58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--section-label-color); }
+.field-group input, .field-group select, .field-group textarea { padding: 11px 12px; border-radius: 7px; border: 1px solid var(--input-border); background: var(--input-bg); outline: none; width: 100%; font-size: 16px; color: var(--text-primary); transition: background .3s, border .3s; }
 .field-group textarea { min-height: 70px; resize: none; line-height: 1.5; }
 .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .btn-primary { width: 100%; background: var(--moss); color: white; border: none; border-radius: 8px; padding: 15px; font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
-.btn-cancel { width: 100%; background: none; border: 1px solid rgba(107,66,38,.25); color: var(--bark); border-radius: 8px; padding: 13px; font-size: .7rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; }
+.btn-cancel { width: 100%; background: none; border: 1px solid var(--input-border); color: var(--bark); border-radius: 8px; padding: 13px; font-size: .7rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; }
 .db-autofill-notice { font-size: .65rem; color: var(--moss); font-style: italic; margin-bottom: 12px; padding: 8px 10px; background: rgba(74,94,58,.08); border-radius: 6px; border-left: 3px solid var(--moss); display: none; }
-
-/* RAIN */
 .rain-entry-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rain-entry-form .field-group { margin-bottom: 0; }
 .btn-add-entry { background: var(--moss); color: white; border: none; border-radius: 7px; padding: 14px; font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; grid-column: 1/-1; }
-.rain-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; background: var(--cream); border-radius: 7px; margin-top: 6px; }
+.rain-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; background: var(--cream2); border-radius: 7px; margin-top: 6px; }
 .rain-row-main { display: flex; flex-direction: column; gap: 2px; }
-.rain-row-date { font-size: .65rem; color: var(--bark-lt); }
-.rain-row-val { font-size: .9rem; font-weight: 700; }
-.btn-del-rain { background: none; border: none; color: rgba(107,66,38,.4); font-size: 1rem; padding: 4px 6px; }
-.empty-rain { font-size: .75rem; color: rgba(107,66,38,.45); font-style: italic; text-align: center; padding: 18px; }
+.rain-row-date { font-size: .65rem; color: var(--text-secondary); }
+.rain-row-val { font-size: .9rem; font-weight: 700; color: var(--text-primary); }
+.btn-del-rain { background: none; border: none; color: var(--text-secondary); font-size: 1rem; padding: 4px 6px; }
+.empty-rain { font-size: .75rem; color: var(--text-secondary); font-style: italic; text-align: center; padding: 18px; }
 .rain-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-.rain-stat { background: white; border-radius: 8px; padding: 11px 10px; text-align: center; border: 1px solid rgba(107,66,38,.1); }
+.rain-stat { background: var(--card-bg); border-radius: 8px; padding: 11px 10px; text-align: center; border: 1px solid var(--card-border); }
 .rain-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--moss); }
-.rain-stat-label { font-size: .52rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--bark-lt); margin-top: 3px; }
-
-/* NOTES */
-.notes-area textarea { min-height: 250px; resize: none; line-height: 1.75; }
-
-/* WEEKLY */
+.rain-stat-label { font-size: .52rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-secondary); margin-top: 3px; }
+.rain-chart-wrap { margin-bottom: 14px; }
+.rain-chart-bars { display: flex; align-items: flex-end; gap: 3px; height: 60px; padding: 0 2px; }
+.rain-bar { flex: 1; background: var(--moss); border-radius: 3px 3px 0 0; min-height: 2px; opacity: .7; transition: opacity .2s; }
+.rain-bar:hover { opacity: 1; }
+.rain-chart-labels { display: flex; gap: 3px; padding: 0 2px; margin-top: 3px; }
+.rain-chart-label { flex: 1; font-size: .44rem; text-align: center; color: var(--text-secondary); letter-spacing: .5px; }
+.notes-area textarea { min-height: 200px; resize: none; line-height: 1.75; }
+.notes-toolbar { display: flex; gap: 8px; margin-bottom: 8px; }
+.btn-stamp { background: var(--moss); color: white; border: none; border-radius: 6px; padding: 7px 12px; font-size: .62rem; letter-spacing: 1.5px; text-transform: uppercase; }
 .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 20px; }
 @media (max-width: 600px) { .week-grid { grid-template-columns: repeat(2, 1fr); } }
-.day-col { background: white; border-radius: 7px; overflow: hidden; border: 1px solid rgba(107,66,38,.1); }
+.day-col { background: var(--card-bg); border-radius: 7px; overflow: hidden; border: 1px solid var(--card-border); }
 .day-col.today-col .day-header { background: var(--moss); }
 .day-header { background: var(--soil2); color: white; text-align: center; padding: 6px 2px; font-size: .54rem; letter-spacing: 1px; text-transform: uppercase; }
 .day-tasks { padding: 5px; }
 .day-task { font-size: .58rem; padding: 4px 5px; margin-bottom: 3px; border-radius: 3px; line-height: 1.25; }
-.dt-water { background: #d0e8f5; color: #1a5f7a; }
-.dt-pest { background: #f5e6cc; color: #7a4a0f; }
-.dt-check { background: #e8e0f5; color: #4a3a70; }
-
-/* SETTINGS PANEL */
+.dt-water { background: var(--tag-water-bg); color: var(--tag-water-fg); }
+.dt-pest { background: var(--tag-pest-bg); color: var(--tag-pest-fg); }
+.dt-check { background: var(--tag-check-bg); color: var(--tag-check-fg); }
+.dt-fert { background: var(--tag-fert-bg); color: var(--tag-fert-fg); }
+.dt-weed { background: var(--tag-weed-bg); color: var(--tag-weed-fg); }
 .settings-panel { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 300; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .settings-panel.open { opacity: 1; pointer-events: all; }
-.settings-sheet { background: var(--cream); border-radius: 16px 16px 0 0; padding: 24px 18px calc(var(--safe-bottom) + 24px); width: 100%; max-height: 85vh; overflow-y: auto; transform: translateY(30px); transition: transform .25s; }
+.settings-sheet { background: var(--cream); border-radius: 16px 16px 0 0; padding: 24px 18px calc(var(--safe-bottom) + 24px); width: 100%; max-height: 88vh; overflow-y: auto; transform: translateY(30px); transition: transform .25s, background .3s; }
 .settings-panel.open .settings-sheet { transform: translateY(0); }
-.settings-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+.settings-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
 .zone-display { background: var(--soil); color: var(--cream); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
 .zone-big { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--sun); }
 .zone-sub { font-size: .62rem; color: rgba(255,255,255,.5); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
@@ -169,27 +215,39 @@ header h1 span { color: var(--sun); font-style: italic; }
 .zone-info-item { flex: 1; }
 .zone-info-label { font-size: .52rem; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.4); }
 .zone-info-val { font-size: .78rem; color: var(--cream); margin-top: 2px; }
-.location-tabs { display: flex; gap: 0; margin-bottom: 14px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(107,66,38,.2); }
-.loc-tab { flex: 1; background: white; border: none; padding: 10px; font-size: .62rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--bark); transition: all .2s; }
+.location-tabs { display: flex; gap: 0; margin-bottom: 14px; border-radius: 8px; overflow: hidden; border: 1px solid var(--input-border); }
+.loc-tab { flex: 1; background: var(--card-bg); border: none; padding: 10px; font-size: .62rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--bark); transition: all .2s; }
 .loc-tab.active { background: var(--moss); color: white; }
 .loc-tab-content { display: none; }
 .loc-tab-content.active { display: block; }
 .btn-locate { width: 100%; background: var(--bark); color: white; border: none; border-radius: 7px; padding: 13px; font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-locate:disabled { opacity: .5; }
 .zip-row { display: flex; gap: 8px; }
-.zip-row input { flex: 1; padding: 11px 12px; border-radius: 7px; border: 1px solid rgba(107,66,38,.25); background: white; outline: none; font-size: 16px; }
+.zip-row input { flex: 1; padding: 11px 12px; border-radius: 7px; border: 1px solid var(--input-border); background: var(--input-bg); outline: none; font-size: 16px; color: var(--text-primary); }
 .btn-zip-go { background: var(--moss); color: white; border: none; border-radius: 7px; padding: 11px 16px; font-size: .65rem; letter-spacing: 1.5px; text-transform: uppercase; }
-.loc-status { font-size: .7rem; color: var(--bark-lt); margin-top: 8px; font-style: italic; min-height: 20px; }
-.season-badge { display: inline-flex; align-items: center; gap: 6px; background: white; border: 1px solid rgba(107,66,38,.1); border-radius: 20px; padding: 6px 12px; font-size: .68rem; margin-top: 12px; }
-
-/* SPROUT BOT */
+.loc-status { font-size: .7rem; color: var(--text-secondary); margin-top: 8px; font-style: italic; min-height: 20px; }
+.season-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 6px 12px; font-size: .68rem; margin-top: 12px; color: var(--text-primary); }
+/* Dark mode toggle */
+.dark-toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); margin-bottom: 16px; }
+.dark-toggle-label { font-size: .72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+.toggle-switch { position: relative; width: 48px; height: 26px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; inset: 0; background: rgba(107,66,38,.25); border-radius: 26px; cursor: pointer; transition: background .3s; }
+.toggle-slider::before { content:''; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform .3s; }
+.toggle-switch input:checked + .toggle-slider { background: var(--moss); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+/* Export/import */
+.data-actions { display: flex; gap: 8px; margin-top: 12px; }
+.btn-export { flex: 1; background: none; border: 1px solid var(--moss); color: var(--moss); border-radius: 7px; padding: 11px; font-size: .62rem; letter-spacing: 1.5px; text-transform: uppercase; }
+.btn-import-label { flex: 1; display: flex; align-items: center; justify-content: center; background: none; border: 1px solid var(--bark); color: var(--bark); border-radius: 7px; padding: 11px; font-size: .62rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; }
+/* Sprout Bot */
 .sprout-fab { position: fixed; bottom: calc(var(--tab-h) + var(--safe-bottom) + 14px); right: 16px; width: 52px; height: 52px; background: var(--moss); border-radius: 50%; border: none; font-size: 1.4rem; box-shadow: 0 4px 16px rgba(74,94,58,.45); z-index: 150; display: flex; align-items: center; justify-content: center; transition: transform .2s; }
 .sprout-fab:active { transform: scale(.93); }
 .sprout-fab .unread-dot { position: absolute; top: 4px; right: 4px; width: 10px; height: 10px; background: var(--sun); border-radius: 50%; border: 2px solid var(--moss); display: none; }
 .sprout-fab .unread-dot.show { display: block; }
 .sprout-panel { position: fixed; inset: 0; z-index: 250; background: rgba(0,0,0,.55); display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .sprout-panel.open { opacity: 1; pointer-events: all; }
-.sprout-sheet { background: var(--cream); border-radius: 16px 16px 0 0; width: 100%; height: 75vh; display: flex; flex-direction: column; transform: translateY(30px); transition: transform .25s; }
+.sprout-sheet { background: var(--cream); border-radius: 16px 16px 0 0; width: 100%; height: 75vh; display: flex; flex-direction: column; transform: translateY(30px); transition: transform .25s, background .3s; }
 .sprout-panel.open .sprout-sheet { transform: translateY(0); }
 .sprout-header { background: var(--soil); border-radius: 16px 16px 0 0; padding: 14px 16px 12px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .sprout-avatar { width: 36px; height: 36px; background: var(--moss); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
@@ -201,30 +259,77 @@ header h1 span { color: var(--sun); font-style: italic; }
 .msg.bot { align-self: flex-start; }
 .msg.user { align-self: flex-end; }
 .msg-bubble { padding: 10px 13px; border-radius: 14px; font-size: .83rem; line-height: 1.55; }
-.msg.bot .msg-bubble { background: white; border: 1px solid rgba(107,66,38,.1); border-bottom-left-radius: 4px; }
+.msg.bot .msg-bubble { background: var(--card-bg); border: 1px solid var(--card-border); border-bottom-left-radius: 4px; color: var(--text-primary); }
 .msg.user .msg-bubble { background: var(--moss); color: white; border-bottom-right-radius: 4px; }
-.msg-time { font-size: .52rem; color: rgba(107,66,38,.4); letter-spacing: .5px; }
+.msg-time { font-size: .52rem; color: var(--text-secondary); letter-spacing: .5px; }
 .msg.user .msg-time { text-align: right; }
 .sprout-suggestions { display: flex; gap: 6px; padding: 0 14px 8px; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; }
 .sprout-suggestions::-webkit-scrollbar { display: none; }
-.sugg-chip { background: white; border: 1px solid rgba(107,66,38,.15); border-radius: 20px; padding: 7px 12px; font-size: .65rem; white-space: nowrap; color: var(--bark); flex-shrink: 0; }
+.sugg-chip { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 7px 12px; font-size: .65rem; white-space: nowrap; color: var(--bark); flex-shrink: 0; }
 .sugg-chip:active { background: var(--cream2); }
-.sprout-input-row { display: flex; gap: 8px; padding: 10px 14px calc(var(--safe-bottom) + 10px); border-top: 1px solid rgba(107,66,38,.1); flex-shrink: 0; background: var(--cream); }
-.sprout-input { flex: 1; padding: 11px 14px; border-radius: 22px; border: 1px solid rgba(107,66,38,.2); background: white; outline: none; font-size: 15px; }
+.sprout-input-row { display: flex; gap: 8px; padding: 10px 14px calc(var(--safe-bottom) + 10px); border-top: 1px solid var(--card-border); flex-shrink: 0; background: var(--cream); }
+.sprout-input { flex: 1; padding: 11px 14px; border-radius: 22px; border: 1px solid var(--input-border); background: var(--input-bg); outline: none; font-size: 15px; color: var(--text-primary); }
 .sprout-send { background: var(--moss); color: white; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 1rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 .typing-dot { display: inline-block; width: 6px; height: 6px; background: var(--bark-lt); border-radius: 50%; animation: blink 1.2s infinite; }
 .typing-dot:nth-child(2) { animation-delay: .2s; }
 .typing-dot:nth-child(3) { animation-delay: .4s; }
 @keyframes blink { 0%,80%,100%{opacity:.25} 40%{opacity:1} }
-
-/* AI REGEN BUTTON */
+/* AI regen bar */
 .ai-regen-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding: 10px 13px; background: rgba(74,94,58,.07); border-radius: 8px; border: 1px dashed rgba(74,94,58,.3); }
 .ai-regen-left { font-size: .65rem; color: var(--moss); }
 .ai-regen-left strong { display: block; font-size: .72rem; margin-bottom: 2px; }
 .btn-regen { background: var(--moss); color: white; border: none; border-radius: 6px; padding: 8px 13px; font-size: .6rem; letter-spacing: 1.5px; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
-
 .content::-webkit-scrollbar { width: 3px; }
 .content::-webkit-scrollbar-thumb { background: rgba(107,66,38,.2); border-radius: 10px; }
+
+/* ===== TASK DATABASE ===== */
+.task-db-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.task-db-item { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border); padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+.task-db-info { flex: 1; }
+.task-db-name { font-size: .85rem; color: var(--text-primary); margin-bottom: 3px; }
+.task-db-meta { font-size: .62rem; color: var(--text-secondary); }
+.task-db-actions { display: flex; gap: 6px; align-items: center; }
+.btn-task-edit { background: none; border: 1px solid var(--card-border); color: var(--text-secondary); border-radius: 5px; padding: 5px 9px; font-size: .6rem; letter-spacing: 1px; text-transform: uppercase; }
+.btn-task-del { background: none; border: 1px solid #d9534f33; color: #d9534f; border-radius: 5px; padding: 5px 9px; font-size: .6rem; }
+.freq-badge { display: inline-block; font-size: .5rem; padding: 2px 7px; border-radius: 10px; margin-right: 5px; text-transform: uppercase; letter-spacing: 1px; background: var(--mist); color: var(--moss); }
+
+/* ===== FERTILIZER LIBRARY ===== */
+.fert-card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border); padding: 12px 14px; margin-bottom: 8px; }
+.fert-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.fert-name { font-size: .88rem; font-weight: 700; color: var(--text-primary); flex: 1; }
+.npk-badge { display: flex; gap: 4px; }
+.npk-n { background: #d4eacc; color: #2d5a1b; padding: 2px 6px; border-radius: 4px; font-size: .58rem; font-weight: 700; }
+.npk-p { background: #fce8d4; color: #7a3a10; padding: 2px 6px; border-radius: 4px; font-size: .58rem; font-weight: 700; }
+.npk-k { background: #d0e8f5; color: #1a5f7a; padding: 2px 6px; border-radius: 4px; font-size: .58rem; font-weight: 700; }
+.fert-desc { font-size: .7rem; color: var(--text-secondary); line-height: 1.4; }
+.fert-use { font-size: .65rem; color: var(--moss); margin-top: 4px; font-style: italic; }
+.fert-actions { display: flex; gap: 6px; margin-top: 8px; }
+.btn-fert-edit { flex: 1; background: var(--cream2); border: 1px solid var(--card-border); color: var(--bark); font-size: .6rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 7px; border-radius: 5px; }
+.btn-fert-del { background: none; border: 1px solid #d9534f33; color: #d9534f; font-size: .6rem; border-radius: 5px; padding: 7px 10px; }
+
+/* ===== WEED LOG ===== */
+.weed-row { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border); padding: 11px 13px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+.weed-main { flex: 1; }
+.weed-date { font-size: .62rem; color: var(--text-secondary); }
+.weed-what { font-size: .82rem; color: var(--text-primary); margin-top: 2px; }
+.weed-action { font-size: .68rem; color: var(--moss); margin-top: 2px; font-style: italic; }
+
+/* ===== HARVEST LOG ===== */
+.harvest-row { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border); padding: 11px 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.harvest-main { flex: 1; }
+.harvest-date { font-size: .62rem; color: var(--text-secondary); }
+.harvest-plant { font-size: .85rem; color: var(--text-primary); }
+.harvest-qty { font-size: .72rem; color: var(--moss); font-style: italic; }
+
+/* ===== TASK HISTORY ===== */
+.history-day { margin-bottom: 14px; }
+.history-day-label { font-size: .6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+.history-item { font-size: .78rem; color: var(--text-primary); padding: 6px 10px; background: var(--card-bg); border-radius: 6px; border: 1px solid var(--card-border); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.history-check { color: var(--moss); font-size: .85rem; }
+
+/* tab overflow scroll on mobile */
+.tab-bar { overflow-x: auto; scrollbar-width: none; }
+.tab-bar::-webkit-scrollbar { display: none; }
 </style>
 </head>
 <body>
@@ -277,6 +382,11 @@ header h1 span { color: var(--sun); font-style: italic; }
   <!-- RAIN -->
   <div class="tab-panel" id="tab-rain">
     <div class="rain-summary" id="rain-summary"></div>
+    <div class="card rain-chart-wrap" id="rain-chart-wrap">
+      <div class="section-label">14-Day Rain Chart</div>
+      <div class="rain-chart-bars" id="rain-chart-bars"></div>
+      <div class="rain-chart-labels" id="rain-chart-labels"></div>
+    </div>
     <div class="card">
       <div class="section-label">Log Rain / Watering</div>
       <div class="rain-entry-form">
@@ -287,9 +397,9 @@ header h1 span { color: var(--sun); font-style: italic; }
             <option value="rain">☁️ Rainfall</option>
             <option value="hand">💧 Hand watered</option>
             <option value="drip">🟢 Drip irrigation</option>
+            <option value="sprinkler">💦 Sprinkler</option>
           </select>
         </div>
-        <div class="field-group"><label>&nbsp;</label></div>
         <button class="btn-add-entry" onclick="addRainEntry()">+ Log Entry</button>
       </div>
     </div>
@@ -307,23 +417,64 @@ header h1 span { color: var(--sun); font-style: italic; }
     <div id="plant-schedule"></div>
   </div>
 
+  <!-- TASKS DB -->
+  <div class="tab-panel" id="tab-tasks">
+    <!-- Fertilizer Library -->
+    <div class="task-db-header">
+      <div class="section-label" style="margin:0;border:none;padding:0">🌿 Fertilizer Library</div>
+      <button class="btn-ghost" onclick="openFertModal()">+ Add</button>
+    </div>
+    <div id="fert-list"></div>
+
+    <!-- Custom Tasks -->
+    <div class="task-db-header" style="margin-top:18px">
+      <div class="section-label" style="margin:0;border:none;padding:0">📋 Task Database</div>
+      <button class="btn-ghost" onclick="openTaskModal()">+ Add</button>
+    </div>
+    <div id="task-db-list"></div>
+
+    <!-- Weed Log -->
+    <div class="task-db-header" style="margin-top:18px">
+      <div class="section-label" style="margin:0;border:none;padding:0">🌾 Weed Log</div>
+      <button class="btn-ghost" onclick="openWeedModal()">+ Log</button>
+    </div>
+    <div id="weed-list"></div>
+
+    <!-- Harvest Log -->
+    <div class="task-db-header" style="margin-top:18px">
+      <div class="section-label" style="margin:0;border:none;padding:0">🍅 Harvest Log</div>
+      <button class="btn-ghost" onclick="openHarvestModal()">+ Log</button>
+    </div>
+    <div id="harvest-list"></div>
+
+    <!-- Task History -->
+    <div class="task-db-header" style="margin-top:18px">
+      <div class="section-label" style="margin:0;border:none;padding:0">🗓 Task History</div>
+    </div>
+    <div id="task-history-list"></div>
+  </div>
+
   <!-- NOTES -->
   <div class="tab-panel" id="tab-notes">
     <div class="section-label">📓 Garden Journal</div>
+    <div class="notes-toolbar">
+      <button class="btn-stamp" onclick="stampDate()">📅 Stamp Date</button>
+    </div>
     <div class="notes-area field-group">
-      <textarea id="garden-notes" placeholder="Observations, experiments, ideas..."></textarea>
+      <textarea id="garden-notes" placeholder="Observations, experiments, ideas...&#10;&#10;Tap 'Stamp Date' to insert today's date as a divider."></textarea>
     </div>
   </div>
-</div>
+</div><!-- end .content -->
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('daily',this)"><div class="tab-icon">☀️</div>Daily</button>
   <button class="tab-btn" onclick="switchTab('plants',this)"><div class="tab-icon">🌿</div>Plants</button>
   <button class="tab-btn" onclick="switchTab('rain',this)"><div class="tab-icon">☁️</div>Rain</button>
   <button class="tab-btn" onclick="switchTab('weekly',this)"><div class="tab-icon">📅</div>Weekly</button>
+  <button class="tab-btn" onclick="switchTab('tasks',this)"><div class="tab-icon">📋</div>Tasks</button>
   <button class="tab-btn" onclick="switchTab('notes',this)"><div class="tab-icon">📓</div>Notes</button>
 </div>
-</div>
+</div><!-- end .shell -->
 
 <!-- SPROUT FAB -->
 <button class="sprout-fab" onclick="openSprout()">
@@ -338,7 +489,7 @@ header h1 span { color: var(--sun); font-style: italic; }
       <div class="sprout-avatar">🌱</div>
       <div>
         <div class="sprout-name">Sprout</div>
-        <div class="sprout-tagline">Your Garden Assistant · Offline AI</div>
+        <div class="sprout-tagline">AI Garden Assistant · Powered by Claude</div>
       </div>
       <button class="sprout-close" onclick="closeSprout()">✕</button>
     </div>
@@ -356,6 +507,15 @@ header h1 span { color: var(--sun); font-style: italic; }
   <div class="settings-sheet">
     <div class="settings-title">⚙️ Garden Settings</div>
 
+    <!-- Dark Mode Toggle -->
+    <div class="dark-toggle-row">
+      <div class="dark-toggle-label">🌙 Dark Mode</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode(this.checked)">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
     <div id="zone-display-card" class="zone-display" style="display:none">
       <div class="zone-sub">Your USDA Hardiness Zone</div>
       <div class="zone-big" id="zone-big-display">—</div>
@@ -369,7 +529,6 @@ header h1 span { color: var(--sun); font-style: italic; }
       <button class="loc-tab" onclick="switchLocTab('zip',this)">Zip Code</button>
       <button class="loc-tab" onclick="switchLocTab('manual',this)">Manual Zone</button>
     </div>
-
     <div class="loc-tab-content active" id="loctab-auto">
       <button class="btn-locate" id="btn-locate" onclick="autoLocate()">📍 Detect My Location</button>
       <div class="loc-status" id="loc-status-auto"></div>
@@ -400,6 +559,14 @@ header h1 span { color: var(--sun); font-style: italic; }
       <button class="btn-primary" onclick="saveManualLocation()">Save Location</button>
     </div>
 
+    <!-- Export / Import -->
+    <div class="section-label" style="margin-top:20px">💾 Data Backup</div>
+    <div style="font-size:.68rem;color:var(--text-secondary);margin-bottom:8px">Export all your garden data as a backup file you can restore later.</div>
+    <div class="data-actions">
+      <button class="btn-export" onclick="exportData()">⬆ Export JSON</button>
+      <label class="btn-import-label">⬇ Import JSON<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+    </div>
+
     <button class="btn-cancel" onclick="closeSettings()" style="margin-top:16px">Close</button>
   </div>
 </div>
@@ -422,7 +589,12 @@ header h1 span { color: var(--sun); font-style: italic; }
       <div class="field-group"><label>Water Every (days)</label><input type="number" id="p-water-days" placeholder="2" min="1"></div>
       <div class="field-group"><label>Water Amount</label><input type="text" id="p-water-amount" placeholder="1 inch"></div>
     </div>
-    <div class="field-group"><label>Fertilizer Schedule</label><input type="text" id="p-feed" placeholder="e.g. Every 2 weeks with balanced fertilizer"></div>
+    <div class="field-group"><label>Fertilizer (pick from library or type)</label>
+      <select id="p-feed-select" onchange="applyFertSelect(this.value)">
+        <option value="">— Choose from library —</option>
+      </select>
+    </div>
+    <div class="field-group"><label>Fertilizer Notes</label><input type="text" id="p-feed" placeholder="e.g. Every 2 weeks once flowering"></div>
     <div class="modal-row">
       <div class="field-group"><label>Sun Requirements</label>
         <select id="p-sun">
@@ -447,6 +619,108 @@ header h1 span { color: var(--sun); font-style: italic; }
   </div>
 </div>
 
+<!-- TASK MODAL -->
+<div class="modal-overlay" id="task-modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="task-modal-title">Add Task</div>
+    <div class="field-group"><label>Task Name *</label><input type="text" id="t-name" placeholder="e.g. Apply neem oil spray"></div>
+    <div class="field-group"><label>Category</label>
+      <select id="t-cat">
+        <option value="check">Check</option>
+        <option value="water">Water</option>
+        <option value="soil">Soil</option>
+        <option value="plant">Plant</option>
+        <option value="pest">Pest</option>
+        <option value="fert">Fertilize</option>
+        <option value="weed">Weed</option>
+        <option value="harvest">Harvest</option>
+      </select>
+    </div>
+    <div class="field-group"><label>Frequency</label>
+      <select id="t-freq">
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly (rotating)</option>
+        <option value="mon">Every Monday</option>
+        <option value="tue">Every Tuesday</option>
+        <option value="wed">Every Wednesday</option>
+        <option value="thu">Every Thursday</option>
+        <option value="fri">Every Friday</option>
+        <option value="sat">Every Saturday</option>
+        <option value="sun">Every Sunday</option>
+        <option value="asneeded">As Needed</option>
+      </select>
+    </div>
+    <div class="field-group"><label>Notes / Instructions</label><textarea id="t-note" placeholder="Details, tips, dosage..."></textarea></div>
+    <button class="btn-primary" id="task-save-btn" onclick="saveTask()">Save Task</button>
+    <button class="btn-cancel" onclick="closeTaskModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- FERTILIZER MODAL -->
+<div class="modal-overlay" id="fert-modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="fert-modal-title">Add Fertilizer</div>
+    <div class="field-group"><label>Name *</label><input type="text" id="f-name" placeholder="e.g. Tomato-Tone"></div>
+    <div class="modal-row">
+      <div class="field-group"><label>N (Nitrogen)</label><input type="number" id="f-n" placeholder="10" min="0" max="50"></div>
+      <div class="field-group"><label>P (Phosphorus)</label><input type="number" id="f-p" placeholder="10" min="0" max="50"></div>
+    </div>
+    <div class="modal-row">
+      <div class="field-group"><label>K (Potassium)</label><input type="number" id="f-k" placeholder="10" min="0" max="50"></div>
+      <div class="field-group"><label>Type</label>
+        <select id="f-type">
+          <option value="granular">Granular</option>
+          <option value="liquid">Liquid</option>
+          <option value="organic">Organic</option>
+          <option value="spike">Spike</option>
+          <option value="foliar">Foliar Spray</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-group"><label>Best Used For</label><input type="text" id="f-use" placeholder="e.g. Tomatoes, peppers — at flowering"></div>
+    <div class="field-group"><label>Notes / Application Rate</label><textarea id="f-desc" placeholder="Application instructions, tips..."></textarea></div>
+    <button class="btn-primary" id="fert-save-btn" onclick="saveFert()">Save Fertilizer</button>
+    <button class="btn-cancel" onclick="closeFertModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- WEED MODAL -->
+<div class="modal-overlay" id="weed-modal-overlay">
+  <div class="modal">
+    <div class="modal-title">Log Weed Event</div>
+    <div class="field-group"><label>Date</label><input type="date" id="w-date"></div>
+    <div class="field-group"><label>What weeds / where</label><input type="text" id="w-what" placeholder="e.g. Crabgrass around tomatoes, bindweed in bed 2"></div>
+    <div class="field-group"><label>Action Taken</label>
+      <select id="w-action">
+        <option value="Pulled by hand">Pulled by hand</option>
+        <option value="Hoe cultivated">Hoe cultivated</option>
+        <option value="Mulched over">Mulched over</option>
+        <option value="Vinegar spray">Vinegar spray</option>
+        <option value="Herbicide applied">Herbicide applied</option>
+        <option value="Cut & smothered">Cut & smothered</option>
+      </select>
+    </div>
+    <div class="field-group"><label>Notes</label><textarea id="w-note" placeholder="Severity, location, follow-up needed..."></textarea></div>
+    <button class="btn-primary" onclick="saveWeed()">Log Weed Event</button>
+    <button class="btn-cancel" onclick="closeWeedModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- HARVEST MODAL -->
+<div class="modal-overlay" id="harvest-modal-overlay">
+  <div class="modal">
+    <div class="modal-title">Log Harvest</div>
+    <div class="field-group"><label>Date</label><input type="date" id="h-date"></div>
+    <div class="field-group"><label>Plant</label>
+      <select id="h-plant"></select>
+    </div>
+    <div class="field-group"><label>Quantity / Weight</label><input type="text" id="h-qty" placeholder="e.g. 3 lbs, 12 tomatoes, 1 quart"></div>
+    <div class="field-group"><label>Notes</label><textarea id="h-note" placeholder="Quality, ripeness, taste notes..."></textarea></div>
+    <button class="btn-primary" onclick="saveHarvest()">Log Harvest</button>
+    <button class="btn-cancel" onclick="closeHarvestModal()">Cancel</button>
+  </div>
+</div>
+
 <script>
 // ============================================================
 // CONSTANTS & STATE
@@ -459,15 +733,114 @@ let plants=JSON.parse(localStorage.getItem('gv4_plants')||'null')||getDefaultPla
 let rainEntries=JSON.parse(localStorage.getItem('gv4_rain')||'[]');
 let editingPlantId=null;
 let userLocation=JSON.parse(localStorage.getItem('gv4_location')||'null');
+let darkMode=JSON.parse(localStorage.getItem('gv4_dark')||'false');
+
+// Task database
+let customTasks=JSON.parse(localStorage.getItem('gv4_tasks')||'null')||getDefaultTasks();
+let editingTaskId=null;
+
+// Fertilizer library
+let fertLibrary=JSON.parse(localStorage.getItem('gv4_ferts')||'null')||getDefaultFerts();
+let editingFertId=null;
+
+// Logs
+let weedLog=JSON.parse(localStorage.getItem('gv4_weeds')||'[]');
+let harvestLog=JSON.parse(localStorage.getItem('gv4_harvest')||'[]');
+let taskHistory=JSON.parse(localStorage.getItem('gv4_task_history')||'{}');
+
+// Sprout conversation
+let sproutConvHistory=[];
+let sproutGreeted=false;
 
 function savePlants(){localStorage.setItem('gv4_plants',JSON.stringify(plants));}
 function saveRainData(){localStorage.setItem('gv4_rain',JSON.stringify(rainEntries));}
 function saveLocation(){localStorage.setItem('gv4_location',JSON.stringify(userLocation));}
+function saveCustomTasks(){localStorage.setItem('gv4_tasks',JSON.stringify(customTasks));}
+function saveFertLibrary(){localStorage.setItem('gv4_ferts',JSON.stringify(fertLibrary));}
+function saveWeedLog(){localStorage.setItem('gv4_weeds',JSON.stringify(weedLog));}
+function saveHarvestLog(){localStorage.setItem('gv4_harvest',JSON.stringify(harvestLog));}
+function saveTaskHistory(){localStorage.setItem('gv4_task_history',JSON.stringify(taskHistory));}
 
 // ============================================================
-// PLANT DATABASE (~30 core plants)
+// DARK MODE
 // ============================================================
-const PLANT_DB = [
+function toggleDarkMode(on){
+  darkMode=on;
+  localStorage.setItem('gv4_dark',JSON.stringify(on));
+  document.body.classList.toggle('dark-mode',on);
+}
+function applyDarkMode(){
+  document.body.classList.toggle('dark-mode',darkMode);
+  const toggle=document.getElementById('dark-mode-toggle');
+  if(toggle) toggle.checked=darkMode;
+}
+
+// ============================================================
+// EXPORT / IMPORT
+// ============================================================
+function exportData(){
+  const data={plants,rainEntries,userLocation,customTasks,fertLibrary,weedLog,harvestLog,taskHistory,notes:localStorage.getItem('gv4_notes')||'',exported:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='garden-backup-'+now.toISOString().split('T')[0]+'.json';
+  a.click();URL.revokeObjectURL(url);
+}
+function importData(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=(ev)=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.plants)plants=d.plants;
+      if(d.rainEntries)rainEntries=d.rainEntries;
+      if(d.userLocation)userLocation=d.userLocation;
+      if(d.customTasks)customTasks=d.customTasks;
+      if(d.fertLibrary)fertLibrary=d.fertLibrary;
+      if(d.weedLog)weedLog=d.weedLog;
+      if(d.harvestLog)harvestLog=d.harvestLog;
+      if(d.taskHistory)taskHistory=d.taskHistory;
+      if(d.notes)localStorage.setItem('gv4_notes',d.notes);
+      savePlants();saveRainData();saveLocation();saveCustomTasks();saveFertLibrary();saveWeedLog();saveHarvestLog();saveTaskHistory();
+      buildAll();
+      alert('✅ Garden data restored successfully!');
+    }catch(err){alert('Could not parse backup file. Make sure it is a valid garden JSON export.');}
+  };
+  reader.readAsText(file);
+}
+
+// ============================================================
+// DEFAULT DATA
+// ============================================================
+function getDefaultTasks(){
+  return[
+    {id:1,name:'Apply diatomaceous earth around plant bases',cat:'pest',freq:'weekly',note:'Controls ants, flea beetles. Reapply after rain. Wear a mask when applying.'},
+    {id:2,name:'Coffee grounds around acid-loving plants',cat:'soil',freq:'weekly',note:'Blueberries, tomatoes, peppers appreciate slightly acidic amendment. Thin layer only.'},
+    {id:3,name:'Weed & mulch audit',cat:'weed',freq:'weekly',note:'Pull weeds before they seed. Top up mulch to 2–3".'},
+    {id:4,name:'Harvest & prune check',cat:'harvest',freq:'weekly',note:'Harvest ripe produce. Prune dead or diseased growth to improve airflow.'},
+    {id:5,name:'Deep soak & root zone check',cat:'water',freq:'weekly',note:'Weekly deep watering encourages deeper root development.'},
+    {id:6,name:'Review rain log & plan next week',cat:'check',freq:'weekly',note:'Check water totals. Note anything to address. Plan upcoming tasks.'},
+    {id:7,name:'Check undersides of leaves for pests',cat:'pest',freq:'daily',note:'Look for aphid clusters, eggs, sticky residue, or distorted growth.'},
+    {id:8,name:'Walk & inspect all plants',cat:'check',freq:'daily',note:'Look for wilt, yellowing, purple stems, curling, spots. Early detection = easy fix.'},
+  ];
+}
+function getDefaultFerts(){
+  return[
+    {id:1,name:'10-10-10 Balanced Granular',n:10,p:10,k:10,type:'granular',use:'All-purpose for vegetable gardens',desc:'Apply 1 lb per 100 sq ft. Work into top 3" of soil. Good for early-season establishment.'},
+    {id:2,name:'Tomato-Tone (3-4-6)',n:3,p:4,k:6,type:'organic',use:'Tomatoes, peppers once flowering',desc:'Espoma organic. Apply ¾ cup per plant every 4 weeks. Low nitrogen prevents excessive leaf growth over fruit.'},
+    {id:3,name:'Fish Emulsion (5-1-1)',n:5,p:1,k:1,type:'liquid',use:'Leafy greens, seedlings, general feeding',desc:'Dilute 1 tbsp per gallon of water. Apply at base every 2 weeks. Excellent for nitrogen-hungry plants. Stinky but effective.'},
+    {id:4,name:'Blood Meal (12-0-0)',n:12,p:0,k:0,type:'organic',use:'Heavy nitrogen feeders — corn, leafy greens',desc:'Very high nitrogen. Use sparingly. 1–2 tbsp per plant worked into soil. Can burn if over-applied.'},
+    {id:5,name:'Bone Meal (3-15-0)',n:3,p:15,k:0,type:'organic',use:'Root development, flowering & fruiting',desc:'High phosphorus. Great at planting time and when plants start to flower. Apply 1–3 tbsp per hole.'},
+    {id:6,name:'Muriate of Potash (0-0-60)',n:0,p:0,k:60,type:'granular',use:'Watermelons, root crops — late season',desc:'High potassium for fruit quality and disease resistance. Use very sparingly — ¼ cup per 10 sq ft.'},
+    {id:7,name:'Compost Tea (variable)',n:2,p:1,k:2,type:'liquid',use:'All plants as a gentle boost',desc:'Steep finished compost in water 24–48 hrs with aeration. Strain and apply directly to soil. Excellent biology booster.'},
+    {id:8,name:'Worm Castings (1-0-0)',n:1,p:0,k:0,type:'organic',use:'All plants, especially seedlings',desc:'Gentle slow-release. Mix into soil or use as top dressing. Can\'t burn. Excellent for improving soil biology.'},
+  ];
+}
+
+// ============================================================
+// PLANT DATABASE
+// ============================================================
+const PLANT_DB=[
   {name:'Tomatoes',emoji:'🍅',waterDays:2,waterAmount:'1–1.5 inches deep soak',feed:'Every 2 weeks with tomato fertilizer (once flowering)',sun:'Full Sun (6–8 hrs)',pest:'Aphids, tomato hornworm, early blight, blossom end rot',notes:'Remove suckers below first flower cluster. Stake or cage early. Consistent moisture prevents blossom end rot. Mulch heavily.'},
   {name:'Peppers',emoji:'🫑',waterDays:3,waterAmount:'1 inch per week',feed:'Every 3 weeks, low nitrogen once fruiting begins',sun:'Full Sun (6–8 hrs)',pest:'Aphids, pepper weevil, bacterial spot',notes:'Pinch first flower buds until 12"+ tall and branched. Hot peppers prefer slightly drier soil.'},
   {name:'Cucumbers',emoji:'🥒',waterDays:2,waterAmount:'1 inch, consistent — never let dry out',feed:'Every 2 weeks with balanced fertilizer',sun:'Full Sun (6–8 hrs)',pest:'Cucumber beetle, squash vine borer, powdery mildew',notes:'Train vines daily. Harvest at 6–8" for best flavor. Remove overripe fruit promptly.'},
@@ -475,123 +848,34 @@ const PLANT_DB = [
   {name:'Strawberries',emoji:'🍓',waterDays:2,waterAmount:'1–1.5 inches, avoid wetting crowns',feed:'Monthly with balanced fertilizer',sun:'Full Sun (6–8 hrs)',pest:'Slugs, birds, gray mold, spider mites',notes:'Pick ripe fruit promptly. Mulch with straw. Pin runners to propagate, cut if not needed.'},
   {name:'Zucchini',emoji:'🥬',waterDays:2,waterAmount:'1 inch, consistent',feed:'Every 3 weeks balanced fertilizer',sun:'Full Sun (6–8 hrs)',pest:'Squash vine borer, cucumber beetle, powdery mildew',notes:'Harvest at 6–8" for best flavor. Very prolific — check daily once fruiting.'},
   {name:'Green Beans',emoji:'🫘',waterDays:3,waterAmount:'1 inch per week',feed:'Minimal — fixes own nitrogen',sun:'Full Sun (6–8 hrs)',pest:'Bean beetles, aphids, rust',notes:'Bush beans: 50–60 days to harvest. Pole beans need trellis. Do not overhead water.'},
-  {name:'Lettuce',emoji:'🥬',waterDays:2,waterAmount:'½ inch, consistent shallow moisture',feed:'Light nitrogen every 2 weeks',sun:'Partial Sun (4–6 hrs)',pest:'Slugs, aphids, downy mildew',notes:'Cut outer leaves for cut-and-come-again harvest. Bolts in heat — plant in spring/fall.'},
+  {name:'Lettuce',emoji:'🥗',waterDays:2,waterAmount:'½ inch, consistent shallow moisture',feed:'Light nitrogen every 2 weeks',sun:'Partial Sun (4–6 hrs)',pest:'Slugs, aphids, downy mildew',notes:'Cut outer leaves for cut-and-come-again harvest. Bolts in heat — plant in spring/fall.'},
   {name:'Spinach',emoji:'🌿',waterDays:2,waterAmount:'1 inch per week',feed:'Light nitrogen every 2 weeks',sun:'Partial Sun (4–6 hrs)',pest:'Leafminers, aphids, downy mildew',notes:'Cool season crop. Bolts in heat. Harvest outer leaves. Direct sow 4–6 weeks before last frost.'},
   {name:'Kale',emoji:'🥦',waterDays:3,waterAmount:'1–1.5 inches per week',feed:'Every 3 weeks nitrogen-heavy',sun:'Full Sun (6–8 hrs)',pest:'Cabbage worms, aphids, flea beetles',notes:'Flavor improves after light frost. Harvest outer leaves, plant keeps producing.'},
   {name:'Carrots',emoji:'🥕',waterDays:3,waterAmount:'1 inch per week, consistent',feed:'Avoid high nitrogen — promotes tops over roots',sun:'Full Sun (6–8 hrs)',pest:'Carrot fly, aphids, wireworms',notes:'Deep loose soil required. Thin to 2" apart. Takes 70–80 days. Do not disturb until harvest.'},
-  {name:'Radishes',emoji:'🔴',waterDays:2,waterAmount:'½ inch, consistent',feed:'Minimal needed',sun:'Full Sun (6–8 hrs)',pest:'Flea beetles, root maggots',notes:'Ready in 25–30 days! Great succession planting crop. Harvest promptly when ready or they become woody.'},
-  {name:'Beets',emoji:'🟣',waterDays:3,waterAmount:'1 inch per week',feed:'Balanced every 3–4 weeks',sun:'Full Sun (6–8 hrs)',pest:'Leaf miners, aphids',notes:'Both roots and greens are edible. Thin seedlings to 3" apart. Harvest at golf ball size.'},
-  {name:'Broccoli',emoji:'🥦',waterDays:2,waterAmount:'1–1.5 inches per week',feed:'Nitrogen-heavy every 3 weeks',sun:'Full Sun (6–8 hrs)',pest:'Cabbage worms, aphids, flea beetles',notes:'Harvest main head before flowers open. Side shoots continue after. Cool season crop.'},
-  {name:'Cabbage',emoji:'🥬',waterDays:3,waterAmount:'1–1.5 inches per week',feed:'Nitrogen fertilizer every 3 weeks',sun:'Full Sun (6–8 hrs)',pest:'Cabbage worms, aphids, cutworms',notes:'Consistent moisture prevents head splitting. Cool season crop — plant early spring or fall.'},
-  {name:'Eggplant',emoji:'🍆',waterDays:3,waterAmount:'1 inch per week, consistent',feed:'Every 2 weeks balanced once flowering',sun:'Full Sun (6–8 hrs)',pest:'Flea beetles, Colorado potato beetle, aphids',notes:'Loves heat. Harvest when skin is glossy. Cutting triggers more fruiting.'},
-  {name:'Okra',emoji:'🌿',waterDays:3,waterAmount:'1 inch per week',feed:'Monthly balanced fertilizer',sun:'Full Sun (6–8 hrs)',pest:'Aphids, corn earworm, stinkbugs',notes:'Harvest pods at 3–4" every 2 days or they become tough. Thrives in Southern heat.'},
-  {name:'Sweet Corn',emoji:'🌽',waterDays:2,waterAmount:'1–1.5 inches per week',feed:'Heavy nitrogen feeder — side dress at knee-high stage',sun:'Full Sun (6–8 hrs)',pest:'Corn earworm, cutworms, Japanese beetles',notes:'Plant in blocks (not rows) for good pollination. Harvest when silks brown and kernel squirts milky juice.'},
   {name:'Basil',emoji:'🌿',waterDays:2,waterAmount:'½–1 inch, avoid overhead watering',feed:'Light balanced every 3 weeks',sun:'Full Sun (6–8 hrs)',pest:'Aphids, Japanese beetles, fusarium wilt',notes:'Pinch flowers to extend harvest. Loves heat, hates cold. Great companion to tomatoes.'},
-  {name:'Rosemary',emoji:'🌿',waterDays:7,waterAmount:'½ inch — drought tolerant once established',feed:'Minimal — light fertilizer in spring only',sun:'Full Sun (6–8 hrs)',pest:'Spider mites, aphids, powdery mildew',notes:'Very drought tolerant. Well-draining soil essential. Perennial in zones 7+.'},
-  {name:'Mint',emoji:'🌿',waterDays:2,waterAmount:'½ inch, keep moist',feed:'Light nitrogen monthly',sun:'Partial Sun (4–6 hrs)',pest:'Aphids, spider mites, rust',notes:'Extremely invasive — grow in containers. Spreads by runners. Harvest before flowering.'},
-  {name:'Thyme',emoji:'🌿',waterDays:7,waterAmount:'½ inch — drought tolerant',feed:'Very minimal — once in spring',sun:'Full Sun (6–8 hrs)',pest:'Spider mites, aphids',notes:'Perennial in zones 5+. Very drought tolerant. Harvest before flowering for best flavor.'},
-  {name:'Oregano',emoji:'🌿',waterDays:7,waterAmount:'½ inch — drought tolerant',feed:'Minimal',sun:'Full Sun (6–8 hrs)',pest:'Aphids, spider mites',notes:'Perennial. Flavor strongest just before flowering. Cut back hard after flowering.'},
-  {name:'Cilantro',emoji:'🌿',waterDays:2,waterAmount:'½ inch consistent',feed:'Light nitrogen monthly',sun:'Partial Sun (4–6 hrs)',pest:'Aphids, whiteflies',notes:'Cool season herb — bolts quickly in heat. Succession plant every 2–3 weeks. Let it bolt for coriander seeds.'},
-  {name:'Parsley',emoji:'🌿',waterDays:3,waterAmount:'1 inch per week',feed:'Balanced every 3 weeks',sun:'Partial Sun (4–6 hrs)',pest:'Swallowtail butterfly caterpillars (let them be!), aphids',notes:'Biennial. Harvest outer stems. Slow to germinate — soak seeds overnight.'},
-  {name:'Dill',emoji:'🌿',waterDays:3,waterAmount:'1 inch per week',feed:'Minimal',sun:'Full Sun (6–8 hrs)',pest:'Swallowtail caterpillars, aphids',notes:'Self-seeds freely. Harvest before flowering. Great with cucumbers and in pickles.'},
   {name:'Garlic',emoji:'🧄',waterDays:5,waterAmount:'1 inch per week',feed:'Nitrogen in early spring',sun:'Full Sun (6–8 hrs)',pest:'Onion thrips, white rot',notes:'Plant cloves in fall (Oct–Nov). Harvest when lower leaves turn brown. Cure bulbs for 3–4 weeks.'},
   {name:'Onions',emoji:'🧅',waterDays:4,waterAmount:'1 inch per week',feed:'Nitrogen-heavy every 2–3 weeks',sun:'Full Sun (6–8 hrs)',pest:'Onion thrips, onion maggot',notes:'Stop fertilizing when bulbing starts. Harvest when tops fall over. Cure in dry warm spot 2–3 weeks.'},
-  {name:'Peas',emoji:'🫛',waterDays:3,waterAmount:'1 inch per week',feed:'Minimal — fixes own nitrogen',sun:'Full Sun (6–8 hrs)',pest:'Aphids, pea moth, powdery mildew',notes:'Cool season crop. Plant 4–6 weeks before last frost. Needs trellis. Harvest daily once podding.'},
+  {name:'Sweet Corn',emoji:'🌽',waterDays:2,waterAmount:'1–1.5 inches per week',feed:'Heavy nitrogen feeder — side dress at knee-high stage',sun:'Full Sun (6–8 hrs)',pest:'Corn earworm, cutworms, Japanese beetles',notes:'Plant in blocks (not rows) for good pollination. Harvest when silks brown and kernel squirts milky juice.'},
   {name:'Sunflowers',emoji:'🌻',waterDays:5,waterAmount:'1 inch per week once established',feed:'Light balanced monthly',sun:'Full Sun (6–8 hrs)',pest:'Birds, aphids, cutworms',notes:'Plant in succession for continuous blooms. Excellent pollinator attractor. Let heads dry on plant for seeds.'},
+  {name:'Eggplant',emoji:'🍆',waterDays:3,waterAmount:'1 inch per week, consistent',feed:'Every 2 weeks balanced once flowering',sun:'Full Sun (6–8 hrs)',pest:'Flea beetles, Colorado potato beetle, aphids',notes:'Loves heat. Harvest when skin is glossy. Cutting triggers more fruiting.'},
+  {name:'Okra',emoji:'🌿',waterDays:3,waterAmount:'1 inch per week',feed:'Monthly balanced fertilizer',sun:'Full Sun (6–8 hrs)',pest:'Aphids, corn earworm, stinkbugs',notes:'Harvest pods at 3–4" every 2 days or they become tough. Thrives in Southern heat.'},
 ];
 
 // ============================================================
-// USDA ZONE DATABASE (by zip prefix + major city lookups)
+// USDA ZONE DATABASE
 // ============================================================
-const ZONE_DATA = {
-  // Zip-prefix based zones (first 3 digits)
-  '350':'7b','351':'7b','352':'7b','354':'7b','355':'7b','356':'7b','357':'7b','358':'7b','359':'7b',
-  '360':'8a','361':'8a','362':'8a','363':'8a','364':'8a','365':'8a','366':'8a','367':'8a','368':'8a','369':'8b',
-  '370':'7a','371':'7a','372':'7a','373':'7a','374':'7a','376':'7a','377':'7a','378':'7a','379':'7a',
-  '380':'7b','381':'7b','382':'7b','383':'7b','384':'7b','385':'7b',
-  '386':'7b','387':'7b','388':'7b','389':'8a','390':'8a','391':'8a','392':'8a','393':'8a','394':'8b','395':'8b','396':'8b','397':'8b',
-  '400':'6b','401':'6b','402':'6b','403':'6b','404':'6b','405':'6b','406':'6b','407':'6b','408':'6b','409':'6b',
-  '410':'6a','411':'6a','412':'6a','413':'6a','414':'6a','415':'6a','416':'6a','417':'6a','418':'6a',
-  '420':'6b','421':'6b','422':'6b','423':'7a','424':'7a','425':'6b','426':'6b','427':'6b',
-  '430':'6a','431':'6a','432':'6a','433':'6a','434':'6a','435':'5b','436':'5b','437':'5b','438':'5b','439':'5b',
-  '440':'6a','441':'6a','442':'6a','443':'6a','444':'6a','445':'6a','446':'6a','447':'6a','448':'6a',
-  '449':'6a','450':'6a','451':'6a','452':'6a','453':'6a','454':'6a','455':'6a','456':'6a','457':'6a','458':'6a',
-  '460':'5b','461':'5b','462':'5b','463':'5b','464':'5b','465':'5b','466':'5b','467':'5b','468':'5b','469':'5b',
-  '470':'5b','471':'5b','472':'5b','473':'5b','474':'5b','475':'5b','476':'5b','477':'5b','478':'5b','479':'6a',
-  '480':'6a','481':'6a','482':'6a','483':'6a','484':'6a','485':'6a','486':'6a','487':'6a','488':'6a','489':'6a',
-  '490':'5b','491':'5b','492':'5b','493':'5b','494':'5b','495':'5b','496':'5b','497':'5b','498':'5b','499':'5a',
-  '500':'5b','501':'5b','502':'5b','503':'5b','504':'5b','505':'5b','506':'5b','507':'5b','508':'5b','509':'5b',
-  '510':'5a','511':'5a','512':'5a','513':'5b','514':'5b','515':'5a','516':'5b',
-  '520':'5a','521':'5a','522':'5a','523':'5a','524':'5a','525':'5b','526':'5b','527':'5b','528':'5b',
-  '530':'5a','531':'5a','532':'5a','534':'5a','535':'5a','537':'5a','538':'5a','539':'5a',
-  '540':'5a','541':'5a','542':'5a','543':'5a','544':'5a','545':'4b','546':'5a','547':'5a','548':'5a','549':'5a',
-  '550':'4b','551':'4b','553':'4b','554':'4b','555':'4b','556':'4b','557':'4b','558':'4b','559':'4b',
-  '560':'4b','561':'4b','562':'4b','563':'4b','564':'4b','565':'4b','566':'4b','567':'4b',
-  '570':'4b','571':'4b','572':'4b','573':'4b','574':'4b','575':'4b','576':'4b','577':'4b',
-  '580':'4a','581':'4a','582':'4a','583':'4a','584':'4a','585':'4a','586':'4a','587':'4a','588':'4a',
-  '590':'4b','591':'4b','592':'5a','593':'5a','594':'5a','595':'5a','596':'5a','597':'5a','598':'5a','599':'5a',
-  '600':'5b','601':'5b','602':'5b','603':'5b','604':'5b','605':'5b','606':'5b','607':'5b','608':'5b','609':'5b',
-  '610':'5b','611':'5b','612':'5b','613':'5b','614':'5b','615':'5b','616':'5b','617':'5b','618':'6a','619':'6a',
-  '620':'6a','622':'6a','623':'6a','624':'6a','625':'6a','626':'6a','627':'6a','628':'6a','629':'6a',
-  '630':'6a','631':'6a','633':'6a','634':'6a','635':'6a','636':'6a','637':'6a','638':'6a','639':'6a',
-  '640':'6a','641':'6a','644':'6a','645':'6a','646':'5b','647':'5b','648':'5b',
-  '650':'6a','651':'6a','652':'6a','653':'6a','654':'6a','655':'6a','656':'6a','657':'6a','658':'6a',
-  '660':'6a','661':'6a','662':'6a','664':'6a','665':'6a','666':'6a','667':'6a','668':'6a','669':'6a',
-  '670':'6a','671':'6a','672':'6a','673':'6a','674':'6a','675':'6a','676':'6a','677':'6a','678':'6a','679':'6a',
-  '680':'5b','681':'5b','683':'5b','684':'5b','685':'5b','686':'5b','687':'5b','688':'5b','689':'5b',
-  '690':'5b','691':'5b','692':'5b','693':'5b',
-  '700':'8b','701':'8b','703':'8b','704':'8b','705':'8b','706':'8b','707':'8b','708':'8b','710':'8b','711':'8b','712':'8b','713':'8b','714':'8b',
-  '716':'7b','717':'7b','718':'7b','719':'7b','720':'7b','721':'7b','722':'7b','723':'7b','724':'7b','725':'7b','726':'7b','727':'7b','728':'7b','729':'7b',
-  '730':'7a','731':'7a','733':'7a','734':'7a','735':'7a','736':'7a','737':'7a','738':'7a','739':'7a',
-  '740':'7a','741':'7a','743':'7a','744':'7a','745':'7a','746':'7a','747':'7a','748':'7a','749':'7a',
-  '750':'8a','751':'8a','752':'8a','753':'8a','754':'8a','755':'8a','756':'8a','757':'8a','758':'8a','759':'8a',
-  '760':'8a','761':'8a','762':'8a','763':'8a','764':'8a','765':'8a','766':'7b','767':'7b','768':'7b','769':'8a',
-  '770':'9a','772':'9a','773':'9a','774':'9a','775':'8b','776':'8b','777':'8b','778':'8b','779':'8b',
-  '780':'8b','781':'8b','782':'8b','783':'8b','784':'9a','785':'9a','786':'8b','787':'8b','788':'8b','789':'8b',
-  '790':'7b','791':'7b','792':'8a','793':'7b','794':'7b','795':'7b','796':'7b','797':'7b','798':'7b','799':'8a',
-  '800':'5b','801':'5b','802':'5b','803':'5b','804':'5b','805':'5b','806':'6a','807':'5b','808':'5b','809':'5b',
-  '810':'5a','811':'5a','812':'5a','813':'5a','814':'5a','815':'5a','816':'5a',
-  '820':'5b','821':'5b','822':'5b','823':'5b','824':'5a','825':'5b','826':'5b','827':'5b','828':'5b','829':'5b',
-  '830':'6a','831':'6a','832':'7a','833':'7a','834':'6b','835':'6a','836':'7a','837':'6b','838':'5b',
-  '840':'6b','841':'6b','842':'6b','843':'6b','844':'7b','845':'6b','846':'6b','847':'6b',
-  '850':'9b','851':'9b','852':'9b','853':'9b','855':'9b','856':'9b','857':'9b','859':'9b','860':'7a','863':'9b','864':'9b','865':'9b',
-  '870':'7b','871':'7b','872':'7b','873':'6b','874':'7a','875':'7b','876':'7b','877':'7a','878':'8a','879':'8a',
-  '880':'8b','881':'8a','882':'8a','883':'7b','884':'8a',
-  '890':'9a','891':'9a','893':'9a','894':'9a','895':'9a','896':'9a','897':'9a','898':'9a',
-  '900':'10a','901':'10a','902':'10a','903':'10a','904':'10a','905':'10a','906':'10a','907':'10a','908':'10a','910':'10a','911':'10a','912':'10a','913':'10a','914':'10a','915':'10a','916':'9b','917':'9b','918':'9b','919':'10a','920':'10a','921':'10a','922':'10a','923':'10a','924':'10a','925':'10a','926':'10a','927':'10a','928':'9b',
-  '930':'10a','931':'9a','932':'9a','933':'9b','934':'9b','935':'9a','936':'9a','937':'9a','938':'9a','939':'9a',
-  '940':'9b','941':'9b','942':'9b','943':'9b','944':'9b','945':'9b','946':'9b','947':'9b','948':'9b','949':'9b',
-  '950':'9b','951':'9b','952':'9b','953':'9b','954':'9b','955':'8a','956':'9b','957':'9b','958':'9b','959':'9b',
-  '960':'9b','961':'9b',
-  '970':'8b','971':'8b','972':'8b','973':'8b','974':'8b','975':'8b','976':'8b','977':'8b','978':'8b','979':'9a',
-  '980':'8b','981':'8b','982':'8b','983':'8b','984':'8b','985':'8b','986':'8b','988':'7a','989':'7a',
-  '990':'6b','991':'6b','992':'6b','993':'6b','994':'7a','995':'6a','996':'6a','997':'5b','998':'5a','999':'5a',
-};
+const ZONE_DATA={'350':'7b','351':'7b','352':'7b','354':'7b','355':'7b','356':'7b','357':'7b','358':'7b','359':'7b','360':'8a','361':'8a','362':'8a','363':'8a','364':'8a','365':'8a','366':'8a','367':'8a','368':'8a','369':'8b','370':'7a','371':'7a','372':'7a','373':'7a','374':'7a','376':'7a','377':'7a','378':'7a','379':'7a','380':'7b','381':'7b','382':'7b','383':'7b','384':'7b','385':'7b','386':'7b','387':'7b','388':'7b','389':'8a','390':'8a','391':'8a','392':'8a','393':'8a','394':'8b','395':'8b','396':'8b','397':'8b','400':'6b','401':'6b','402':'6b','403':'6b','404':'6b','405':'6b','406':'6b','407':'6b','408':'6b','409':'6b','410':'6a','411':'6a','412':'6a','413':'6a','414':'6a','415':'6a','416':'6a','417':'6a','418':'6a','420':'6b','421':'6b','422':'6b','423':'7a','424':'7a','425':'6b','426':'6b','427':'6b','430':'6a','431':'6a','432':'6a','433':'6a','434':'6a','435':'5b','436':'5b','437':'5b','438':'5b','439':'5b','440':'6a','441':'6a','442':'6a','443':'6a','444':'6a','445':'6a','446':'6a','447':'6a','448':'6a','449':'6a','450':'6a','451':'6a','452':'6a','453':'6a','454':'6a','455':'6a','456':'6a','457':'6a','458':'6a','460':'5b','461':'5b','462':'5b','463':'5b','464':'5b','465':'5b','466':'5b','467':'5b','468':'5b','469':'5b','470':'5b','471':'5b','472':'5b','473':'5b','474':'5b','475':'5b','476':'5b','477':'5b','478':'5b','479':'6a','480':'6a','481':'6a','482':'6a','483':'6a','484':'6a','485':'6a','486':'6a','487':'6a','488':'6a','489':'6a','490':'5b','491':'5b','492':'5b','493':'5b','494':'5b','495':'5b','496':'5b','497':'5b','498':'5b','499':'5a','500':'5b','501':'5b','502':'5b','503':'5b','504':'5b','505':'5b','506':'5b','507':'5b','508':'5b','509':'5b','530':'5a','531':'5a','532':'5a','534':'5a','535':'5a','537':'5a','538':'5a','539':'5a','600':'5b','601':'5b','602':'5b','603':'5b','604':'5b','605':'5b','606':'5b','607':'5b','608':'5b','609':'5b','700':'8b','701':'8b','703':'8b','704':'8b','705':'8b','706':'8b','707':'8b','708':'8b','750':'8a','751':'8a','752':'8a','753':'8a','770':'9a','772':'9a','773':'9a','774':'9a','800':'5b','801':'5b','802':'5b','803':'5b','900':'10a','901':'10a','902':'10a','903':'10a'};
+const ZONE_FROST={'3a':{last:'May 15',first:'Sep 1',min:-40},'3b':{last:'May 1',first:'Sep 15',min:-35},'4a':{last:'Apr 15',first:'Sep 15',min:-30},'4b':{last:'Apr 15',first:'Oct 1',min:-25},'5a':{last:'Apr 1',first:'Oct 1',min:-20},'5b':{last:'Apr 1',first:'Oct 15',min:-15},'6a':{last:'Mar 15',first:'Oct 15',min:-10},'6b':{last:'Mar 15',first:'Nov 1',min:-5},'7a':{last:'Mar 1',first:'Nov 1',min:0},'7b':{last:'Feb 15',first:'Nov 15',min:5},'8a':{last:'Feb 15',first:'Nov 15',min:10},'8b':{last:'Jan 15',first:'Dec 1',min:15},'9a':{last:'Jan 15',first:'Dec 1',min:20},'9b':{last:'Jan 1',first:'Dec 15',min:25},'10a':{last:'Frost-free',first:'Frost-free',min:30},'10b':{last:'Frost-free',first:'Frost-free',min:35}};
 
-const ZONE_FROST = {
-  '3a':{last:'May 15',first:'Sep 1',min:-40},'3b':{last:'May 1',first:'Sep 15',min:-35},
-  '4a':{last:'Apr 15',first:'Sep 15',min:-30},'4b':{last:'Apr 15',first:'Oct 1',min:-25},
-  '5a':{last:'Apr 1',first:'Oct 1',min:-20},'5b':{last:'Apr 1',first:'Oct 15',min:-15},
-  '6a':{last:'Mar 15',first:'Oct 15',min:-10},'6b':{last:'Mar 15',first:'Nov 1',min:-5},
-  '7a':{last:'Mar 1',first:'Nov 1',min:0},'7b':{last:'Feb 15',first:'Nov 15',min:5},
-  '8a':{last:'Feb 15',first:'Nov 15',min:10},'8b':{last:'Jan 15',first:'Dec 1',min:15},
-  '9a':{last:'Jan 15',first:'Dec 1',min:20},'9b':{last:'Jan 1',first:'Dec 15',min:25},
-  '10a':{last:'Frost-free',first:'Frost-free',min:30},'10b':{last:'Frost-free',first:'Frost-free',min:35},
-  '11a':{last:'Frost-free',first:'Frost-free',min:40},'11b':{last:'Frost-free',first:'Frost-free',min:45},
-};
-
-function lookupZoneByZip(zip){
-  const prefix=zip.substring(0,3);
-  return ZONE_DATA[prefix]||null;
-}
+function lookupZoneByZip(zip){return ZONE_DATA[zip.substring(0,3)]||null;}
 
 function getDefaultPlants(){
-  return [
+  return[
     {id:1,emoji:'🍅',name:'Tomatoes',variety:'Mix — indeterminate & determinate',waterDays:2,waterAmount:'1–1.5 inches deep soak',feed:'Every 2 weeks with tomato fertilizer (once flowering)',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Aphids, tomato hornworm, early blight, blossom end rot',notes:'Remove suckers below first flower cluster. Stake or cage early. Consistent moisture prevents BER. Mulch heavily.'},
     {id:2,emoji:'🫑',name:'Peppers',variety:'Bell & hot mix',waterDays:3,waterAmount:'1 inch per week',feed:'Every 3 weeks, low nitrogen once fruiting begins',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Aphids, pepper weevil, bacterial spot',notes:'Pinch first flower buds until 12"+ tall and branched. Hot peppers prefer slightly drier soil.'},
     {id:3,emoji:'🥒',name:'Cucumbers',variety:'Slicing & pickling',waterDays:2,waterAmount:'1 inch, consistent',feed:'Every 2 weeks with balanced fertilizer',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Cucumber beetle, squash vine borer, powdery mildew',notes:'Train vines daily. Harvest at 6–8" for best flavor.'},
     {id:4,emoji:'🍉',name:'Watermelons',variety:'Standard & personal size',waterDays:3,waterAmount:'1–2 inches/week, reduce near harvest',feed:'High nitrogen early, switch to low N + high K at fruit set',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Aphids, cucumber beetle, vine borers, squash bugs',notes:'Needs 70–90 days from transplant. Thump test: hollow = ripe.'},
-    {id:5,emoji:'🍓',name:'Strawberries',variety:'Everbearing mix',waterDays:2,waterAmount:'1–1.5 inches, avoid wetting crowns',feed:'Monthly with balanced fertilizer',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Slugs, birds, gray mold, spider mites',notes:'Pick ripe fruit promptly. Mulch with straw. Pin runners to propagate.'}
+    {id:5,emoji:'🍓',name:'Strawberries',variety:'Everbearing mix',waterDays:2,waterAmount:'1–1.5 inches, avoid wetting crowns',feed:'Monthly with balanced fertilizer',sun:'Full Sun (6–8 hrs)',status:'growing',pest:'Slugs, birds, gray mold, spider mites',notes:'Pick ripe fruit promptly. Mulch with straw. Pin runners to propagate.'},
   ];
 }
 
@@ -600,15 +884,7 @@ function getDefaultPlants(){
 // ============================================================
 document.getElementById('today-date').textContent=MONTHS[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
 document.getElementById('today-day').textContent=DAYS[now.getDay()];
-
-function updateHeaderLoc(){
-  const el=document.getElementById('header-loc-tag');
-  if(userLocation){
-    el.textContent=(userLocation.city||'Your Garden')+' · Zone '+userLocation.zone;
-  } else {
-    el.textContent='Tap to set location';
-  }
-}
+function updateHeaderLoc(){const el=document.getElementById('header-loc-tag');el.textContent=userLocation?(userLocation.city||'Your Garden')+' · Zone '+userLocation.zone:'Tap to set location';}
 
 // ============================================================
 // TABS
@@ -620,36 +896,27 @@ function switchTab(id,btn){
   btn.classList.add('active');
   document.querySelector('.content').scrollTop=0;
   if(id==='weekly')buildWeekly();
+  if(id==='tasks')buildTasksTab();
 }
 
 // ============================================================
-// SMART DAILY TASK GENERATOR
+// HELPERS
 // ============================================================
-function getSeason(){
-  const m=now.getMonth();
-  if(m>=2&&m<=4)return'spring';
-  if(m>=5&&m<=7)return'summer';
-  if(m>=8&&m<=10)return'fall';
-  return'winter';
-}
+function getSeason(){const m=now.getMonth();if(m>=2&&m<=4)return'spring';if(m>=5&&m<=7)return'summer';if(m>=8&&m<=10)return'fall';return'winter';}
+function getRecentRainInches(days){const cutoff=new Date();cutoff.setDate(cutoff.getDate()-days);return rainEntries.filter(e=>new Date(e.date)>=cutoff).reduce((s,e)=>s+e.amount,0);}
 
-function getRecentRainInches(days){
-  const cutoff=new Date();cutoff.setDate(cutoff.getDate()-days);
-  return rainEntries.filter(e=>new Date(e.date)>=cutoff).reduce((s,e)=>s+e.amount,0);
-}
-
+// ============================================================
+// DAILY TASKS
+// ============================================================
 function regenDailyTasks(){
   const container=document.getElementById('daily-tasks-container');
   const season=getSeason();
   const zone=userLocation?userLocation.zone:'7b';
   const rain24=getRecentRainInches(1);
-  const rain7=getRecentRainInches(7);
   const dayOfWeek=now.getDay();
   const tasks=[];
 
-  // Morning section
   tasks.push({section:'🌅 Morning Checks'});
-
   if(rain24>=0.5){
     tasks.push({text:'Rain check — '+rain24.toFixed(2)+'" logged in last 24 hrs',note:'Skip watering today! Soil likely saturated. Check drainage.',tag:'water'});
   } else if(rain24>=0.25){
@@ -658,78 +925,65 @@ function regenDailyTasks(){
     tasks.push({text:'Check soil moisture at root depth',note:'Finger 2–3" in. Water if dry at depth. Base only, no wet foliage.',tag:'water'});
     tasks.push({text:'Water plants if needed',note:'Deep soak at base. '+plants.filter(p=>p.status==='growing').map(p=>p.emoji+' '+p.name+': every '+p.waterDays+' days').join(' · '),tag:'water'});
   }
-
   tasks.push({text:'Walk & inspect all plants',note:'Look for wilt, yellowing, purple stems, curling, spots. Early detection = easy fix.',tag:'check'});
   tasks.push({text:'Check undersides of leaves for pests',note:'Look for aphid clusters, eggs, sticky residue, or distorted growth.',tag:'pest'});
 
-  // Midday section
   tasks.push({section:'☀️ Midday Tasks'});
-
   plants.filter(p=>p.status==='growing').forEach(p=>{
-    if(p.name.toLowerCase().includes('tomato')){
-      tasks.push({text:p.emoji+' '+p.name+' — remove suckers',note:'Remove suckers in the V between main stem and branch below first flower cluster.',tag:'plant'});
-    }
-    if(p.name.toLowerCase().includes('cucumber')||p.name.toLowerCase().includes('watermelon')||p.name.toLowerCase().includes('zucchini')){
-      tasks.push({text:p.emoji+' '+p.name+' — train vines',note:'Guide vines daily — they can move 6–12" per day in peak season.',tag:'plant'});
-    }
-    if(p.name.toLowerCase().includes('strawberr')){
-      tasks.push({text:p.emoji+' '+p.name+' — check runners & fruit',note:'Pick ripe fruit promptly. Pin runners to propagate, cut if not needed.',tag:'plant'});
-    }
-    if(p.name.toLowerCase().includes('pepper')){
-      tasks.push({text:p.emoji+' '+p.name+' — check branching',note:'Pinch early buds if plant is under 12". More fruit from a stronger plant later.',tag:'plant'});
+    if(p.name.toLowerCase().includes('tomato'))tasks.push({text:p.emoji+' '+p.name+' — remove suckers',note:'Remove suckers in the V between main stem and branch below first flower cluster.',tag:'plant'});
+    if(p.name.toLowerCase().includes('cucumber')||p.name.toLowerCase().includes('watermelon')||p.name.toLowerCase().includes('zucchini'))tasks.push({text:p.emoji+' '+p.name+' — train vines',note:'Guide vines daily — they can move 6–12" per day in peak season.',tag:'plant'});
+    if(p.name.toLowerCase().includes('strawberr'))tasks.push({text:p.emoji+' '+p.name+' — check runners & fruit',note:'Pick ripe fruit promptly. Pin runners to propagate, cut if not needed.',tag:'plant'});
+    if(p.name.toLowerCase().includes('pepper'))tasks.push({text:p.emoji+' '+p.name+' — check branching',note:'Pinch early buds if plant is under 12". More fruit from a stronger plant later.',tag:'plant'});
+  });
+
+  // Custom tasks from database based on frequency/day
+  const dayNames=['sun','mon','tue','wed','thu','fri','sat'];
+  const todayKey=dayNames[dayOfWeek];
+  customTasks.forEach(t=>{
+    if(t.freq==='daily'||t.freq===todayKey||(t.freq==='weekly'&&dayOfWeek===1)){
+      tasks.push({text:t.name,note:t.note||'',tag:t.cat});
     }
   });
 
-  // Season-specific tasks
-  if(season==='spring'){
-    tasks.push({text:'Check for frost overnight — cover tender seedlings if needed',note:zone+' late frost window. Protect tomatoes, peppers, basil if temps drop below 45°F.',tag:'check'});
-  }
-  if(season==='summer'){
-    tasks.push({text:'Mulch check — keep 2–3" around plant bases',note:'Summer heat: mulch conserves moisture and keeps soil 10°F cooler.',tag:'soil'});
-  }
-  if(season==='fall'){
-    tasks.push({text:'Watch for first frost — harvest warm-season crops soon',note:'Zone '+zone+': first frost approaching. Plan to harvest tomatoes, peppers, basil.',tag:'check'});
+  // Fertilizer reminders from library (rotate weekly)
+  const fertDay=dayOfWeek%2===0;
+  if(fertDay&&fertLibrary.length>0){
+    const fert=fertLibrary[Math.floor(dayOfWeek/2)%fertLibrary.length];
+    tasks.push({text:'Fertilizer check — '+fert.name,note:'Best for: '+fert.use+'. '+fert.desc.substring(0,80)+'…',tag:'fert'});
   }
 
-  // Weekly rotation
-  const weeklyTasks=[
-    [{text:'Apply DE around plant bases',note:'Diatomaceous earth controls ants, flea beetles. Reapply after rain.',tag:'pest'}],
-    [{text:'Coffee grounds around acid-loving plants',note:'Blueberries, tomatoes, peppers appreciate slightly acidic soil amendment.',tag:'soil'}],
-    [{text:'Compost tea or liquid fertilizer',note:'Dilute fish emulsion or compost tea — excellent mid-season boost.',tag:'soil'}],
-    [{text:'Deep soak & check root zone moisture',note:'Weekly deep watering encourages deeper root development.',tag:'water'}],
-    [{text:'Harvest & prune check',note:'Harvest ripe produce. Prune dead or diseased growth.',tag:'plant'}],
-    [{text:'Weed & mulch audit',note:'Pull weeds before they seed. Top up mulch to 2–3".',tag:'soil'}],
-    [{text:'Review rain log & plan next week',note:'Check water totals. Note anything to address.',tag:'check'}],
-  ];
-  if(weeklyTasks[dayOfWeek]){
-    weeklyTasks[dayOfWeek].forEach(t=>tasks.push(t));
+  // Season tasks
+  if(season==='spring')tasks.push({text:'Check for frost overnight — cover tender seedlings if needed',note:zone+' late frost window. Protect tomatoes, peppers, basil if temps drop below 45°F.',tag:'check'});
+  if(season==='summer')tasks.push({text:'Mulch check — keep 2–3" around plant bases',note:'Summer heat: mulch conserves moisture and keeps soil 10°F cooler.',tag:'soil'});
+  if(season==='fall')tasks.push({text:'Watch for first frost — harvest warm-season crops soon',note:'Zone '+zone+': first frost approaching. Plan to harvest tomatoes, peppers, basil.',tag:'check'});
+
+  // Weed reminder
+  if(dayOfWeek===3||dayOfWeek===6){
+    tasks.push({text:'Weed check — inspect all beds',note:'Pull weeds before they set seed. Log in the Tasks tab weed log.',tag:'weed'});
   }
 
-  // Evening section
   tasks.push({section:'🌙 Evening'});
   tasks.push({text:'Log any watering or rain in Rain tab',note:'Accurate log = better decisions. Takes 10 seconds.',tag:'check'});
   tasks.push({text:'Check ant activity at base of plants',note:'Reapply DE if disturbed or rained on. Ants farm aphids.',tag:'pest'});
   tasks.push({text:'Write observations in Notes',note:'Anything notable: new flowers, color changes, pest signs, treatments applied.',tag:'check'});
 
-  // Update context line
   const contextParts=[];
   contextParts.push(season.charAt(0).toUpperCase()+season.slice(1));
-  if(userLocation) contextParts.push('Zone '+zone);
-  if(rain24>=0.5) contextParts.push('🌧 Rain detected — watering adjusted');
+  if(userLocation)contextParts.push('Zone '+zone);
+  if(rain24>=0.5)contextParts.push('🌧 Rain detected — watering adjusted');
   document.getElementById('daily-context-line').textContent=contextParts.join(' · ');
 
-  // Render
-  const tagMap={water:'tag-water',soil:'tag-soil',plant:'tag-plant',pest:'tag-pest',check:'tag-check'};
-  const tagLabel={water:'Water',soil:'Soil',plant:'Plant',pest:'Pest',check:'Check'};
+  const tagMap={water:'tag-water',soil:'tag-soil',plant:'tag-plant',pest:'tag-pest',check:'tag-check',fert:'tag-fert',weed:'tag-weed',harvest:'tag-harvest'};
+  const tagLabel={water:'Water',soil:'Soil',plant:'Plant',pest:'Pest',check:'Check',fert:'Fertilize',weed:'Weed',harvest:'Harvest'};
   let html='';
-  tasks.forEach((t,i)=>{
+  tasks.forEach(t=>{
     if(t.section){
       html+=`<div class="section-label">${t.section}</div>`;
     } else {
-      html+=`<div class="check-item" onclick="toggle(this)">
+      html+=`<div class="check-item" onclick="toggleTask(this,'${(t.text||'').replace(/'/g,"\\'")}')">
         <div class="checkbox"></div>
         <div class="item-content">
-          <div class="item-text">${t.text}${t.tag?`<span class="item-tag ${tagMap[t.tag]}">${tagLabel[t.tag]}</span>`:''}</div>
+          <div class="item-text">${t.text}${t.tag?`<span class="item-tag ${tagMap[t.tag]||''}">${tagLabel[t.tag]||''}</span>`:''}</div>
           ${t.note?`<div class="item-note">${t.note}</div>`:''}
         </div>
       </div>`;
@@ -739,6 +993,16 @@ function regenDailyTasks(){
   loadChecks();
 }
 
+function toggleTask(el,taskName){
+  el.classList.toggle('done');
+  if(el.classList.contains('done')){
+    const today=now.toDateString();
+    if(!taskHistory[today])taskHistory[today]=[];
+    if(!taskHistory[today].includes(taskName))taskHistory[today].push(taskName);
+    saveTaskHistory();
+  }
+  saveChecks();updateProgress();
+}
 function toggle(el){el.classList.toggle('done');saveChecks();updateProgress();}
 function updateProgress(){
   const items=document.querySelectorAll('#tab-daily .check-item');
@@ -747,14 +1011,10 @@ function updateProgress(){
   document.getElementById('daily-progress-fill').style.width=pct+'%';
   document.getElementById('daily-progress-text').textContent=done.length+' / '+items.length;
 }
-function resetDaily(){
-  document.querySelectorAll('#tab-daily .check-item').forEach(el=>el.classList.remove('done'));
-  saveChecks();updateProgress();
-}
+function resetDaily(){document.querySelectorAll('#tab-daily .check-item').forEach(el=>el.classList.remove('done'));saveChecks();updateProgress();}
 function saveChecks(){
   const checks=Array.from(document.querySelectorAll('#tab-daily .check-item')).map(el=>el.classList.contains('done'));
-  localStorage.setItem('gv4_daily',JSON.stringify(checks));
-  localStorage.setItem('gv4_last_day',now.toDateString());
+  localStorage.setItem('gv4_daily',JSON.stringify(checks));localStorage.setItem('gv4_last_day',now.toDateString());
 }
 function loadChecks(){
   if(localStorage.getItem('gv4_last_day')!==now.toDateString())localStorage.removeItem('gv4_daily');
@@ -771,30 +1031,22 @@ function buildHeaderPills(){
   pills.innerHTML='<button class="pill-add" onclick="openPlantModal()">+ Add Plant</button>';
   plants.forEach(p=>{const s=document.createElement('span');s.className='pill';s.textContent=p.emoji+' '+p.name;pills.appendChild(s);});
 }
-
 function buildPlantList(){
   const c=document.getElementById('plant-list');
   if(!plants.length){c.innerHTML='<div class="empty-rain" style="margin-top:20px">No plants yet. Add your first!</div>';return;}
   c.innerHTML='';
   plants.forEach(p=>{
-    const card=document.createElement('div');
-    card.className='plant-card';card.id='pc-'+p.id;
+    const card=document.createElement('div');card.className='plant-card';card.id='pc-'+p.id;
     const sc=p.status==='growing'?'status-growing':'status-watch';
     const sl=p.status==='growing'?'● Growing':p.status==='watch'?'⚠ Watch':'○ Dormant';
     card.innerHTML=`<div class="plant-card-header" onclick="togglePlantCard(${p.id})"><div class="plant-emoji">${p.emoji}</div><div><div class="plant-name">${p.name}</div><div class="plant-variety">${p.variety||''}</div></div><div class="plant-status ${sc}">${sl}</div><div class="chevron">▼</div></div><div class="plant-body"><div class="care-grid"><div class="care-block"><div class="care-block-label">💧 Water</div><div class="care-block-val">Every ${p.waterDays} day${p.waterDays>1?'s':''}</div></div><div class="care-block"><div class="care-block-label">📏 Amount</div><div class="care-block-val">${p.waterAmount}</div></div><div class="care-block"><div class="care-block-label">🌿 Fertilize</div><div class="care-block-val">${p.feed}</div></div><div class="care-block"><div class="care-block-label">☀️ Sun</div><div class="care-block-val">${p.sun}</div></div><div class="care-block care-full"><div class="care-block-label">🐛 Pest Risks</div><div class="care-block-val">${p.pest||'—'}</div></div><div class="care-block care-full"><div class="care-block-label">📋 Notes</div><div class="care-block-val">${p.notes||'—'}</div></div></div><div class="plant-actions"><button class="btn-edit" onclick="openEditPlant(${p.id})">✏ Edit</button><button class="btn-delete" onclick="deletePlant(${p.id})">Delete</button></div></div>`;
     c.appendChild(card);
   });
 }
-
 function togglePlantCard(id){document.getElementById('pc-'+id).classList.toggle('open');}
-function deletePlant(id){
-  if(!confirm('Remove this plant?'))return;
-  plants=plants.filter(p=>p.id!==id);savePlants();buildPlantList();buildHeaderPills();regenDailyTasks();
-}
+function deletePlant(id){if(!confirm('Remove this plant?'))return;plants=plants.filter(p=>p.id!==id);savePlants();buildPlantList();buildHeaderPills();regenDailyTasks();}
 
-// ============================================================
-// PLANT DATABASE SEARCH & MODAL
-// ============================================================
+// PLANT MODAL
 function searchPlantDB(q){
   const list=document.getElementById('autocomplete-list');
   if(!q||q.length<1){list.style.display='none';return;}
@@ -802,15 +1054,13 @@ function searchPlantDB(q){
   if(!results.length){list.style.display='none';return;}
   list.innerHTML='';
   results.slice(0,6).forEach(p=>{
-    const item=document.createElement('div');
-    item.className='autocomplete-item';
+    const item=document.createElement('div');item.className='autocomplete-item';
     item.innerHTML=`${p.emoji} ${p.name} <span class="db-tag">Database</span>`;
     item.onclick=()=>{autofillFromDB(p);list.style.display='none';};
     list.appendChild(item);
   });
   list.style.display='block';
 }
-
 function autofillFromDB(p){
   document.getElementById('p-emoji').value=p.emoji||'';
   document.getElementById('p-name').value=p.name||'';
@@ -824,14 +1074,19 @@ function autofillFromDB(p){
   document.getElementById('db-autofill-notice').style.display='block';
   document.getElementById('plant-db-search').value=p.name;
 }
-
-function openPlantModal(){
-  editingPlantId=null;
-  document.getElementById('modal-title').textContent='Add Plant';
-  document.getElementById('modal-save-btn').textContent='Save Plant';
-  clearModal();
-  document.getElementById('plant-modal-overlay').classList.add('open');
+function applyFertSelect(val){
+  if(!val)return;
+  const f=fertLibrary.find(x=>x.id==val);
+  if(f)document.getElementById('p-feed').value=f.name+' ('+f.n+'-'+f.p+'-'+f.k+'). '+f.use;
 }
+function populateFertSelect(){
+  const sel=document.getElementById('p-feed-select');
+  sel.innerHTML='<option value="">— Choose from library —</option>';
+  fertLibrary.forEach(f=>{
+    const o=document.createElement('option');o.value=f.id;o.textContent=f.name+' ('+f.n+'-'+f.p+'-'+f.k+')';sel.appendChild(o);
+  });
+}
+function openPlantModal(){editingPlantId=null;document.getElementById('modal-title').textContent='Add Plant';document.getElementById('modal-save-btn').textContent='Save Plant';clearModal();populateFertSelect();document.getElementById('plant-modal-overlay').classList.add('open');}
 function openEditPlant(id){
   const p=plants.find(x=>x.id===id);if(!p)return;
   editingPlantId=id;
@@ -849,19 +1104,11 @@ function openEditPlant(id){
   document.getElementById('p-notes').value=p.notes||'';
   document.getElementById('db-autofill-notice').style.display='none';
   document.getElementById('plant-db-search').value='';
+  populateFertSelect();
   document.getElementById('plant-modal-overlay').classList.add('open');
 }
-function closePlantModal(){
-  document.getElementById('plant-modal-overlay').classList.remove('open');
-  document.getElementById('autocomplete-list').style.display='none';
-}
-function clearModal(){
-  ['p-emoji','p-name','p-variety','p-water-days','p-water-amount','p-feed','p-pest','p-notes','plant-db-search'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('p-sun').value='Full Sun (6–8 hrs)';
-  document.getElementById('p-status').value='growing';
-  document.getElementById('db-autofill-notice').style.display='none';
-  document.getElementById('autocomplete-list').style.display='none';
-}
+function closePlantModal(){document.getElementById('plant-modal-overlay').classList.remove('open');document.getElementById('autocomplete-list').style.display='none';}
+function clearModal(){['p-emoji','p-name','p-variety','p-water-days','p-water-amount','p-feed','p-pest','p-notes','plant-db-search'].forEach(id=>document.getElementById(id).value='');document.getElementById('p-sun').value='Full Sun (6–8 hrs)';document.getElementById('p-status').value='growing';document.getElementById('db-autofill-notice').style.display='none';document.getElementById('autocomplete-list').style.display='none';}
 function savePlant(){
   const name=document.getElementById('p-name').value.trim();
   if(!name){alert('Plant name is required.');return;}
@@ -881,24 +1128,48 @@ function buildRainSummary(){
   rainEntries.forEach(e=>{const d=new Date(e.date);total+=e.amount;if(d>=d7)week+=e.amount;if(d>=d30)month+=e.amount;});
   document.getElementById('rain-summary').innerHTML=`<div class="rain-stat"><div class="rain-stat-num">${week.toFixed(1)}"</div><div class="rain-stat-label">Last 7 Days</div></div><div class="rain-stat"><div class="rain-stat-num">${month.toFixed(1)}"</div><div class="rain-stat-label">Last 30 Days</div></div><div class="rain-stat"><div class="rain-stat-num">${total.toFixed(1)}"</div><div class="rain-stat-label">All Time</div></div>`;
 }
+function buildRainChart(){
+  const barsEl=document.getElementById('rain-chart-bars');
+  const labelsEl=document.getElementById('rain-chart-labels');
+  const days=14;
+  const buckets=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const key=d.toISOString().split('T')[0];
+    const total=rainEntries.filter(e=>e.date===key).reduce((s,e)=>s+e.amount,0);
+    buckets.push({label:DAYS[d.getDay()].slice(0,1),val:total,date:key});
+  }
+  const maxVal=Math.max(...buckets.map(b=>b.val),0.1);
+  barsEl.innerHTML='';labelsEl.innerHTML='';
+  buckets.forEach(b=>{
+    const pct=Math.max((b.val/maxVal)*100,b.val>0?4:1);
+    const bar=document.createElement('div');
+    bar.className='rain-bar';bar.style.height=pct+'%';
+    bar.title=b.date+': '+b.val.toFixed(2)+'"';
+    barsEl.appendChild(bar);
+    const lbl=document.createElement('div');
+    lbl.className='rain-chart-label';lbl.textContent=b.label;
+    labelsEl.appendChild(lbl);
+  });
+}
 function addRainEntry(){
   const date=document.getElementById('rain-date').value;
   const amount=parseFloat(document.getElementById('rain-amount').value);
   const type=document.getElementById('rain-type').value;
   if(!date||isNaN(amount)||amount<0){alert('Please fill in a valid date and amount.');return;}
   rainEntries.unshift({id:Date.now(),date,amount,type});
-  saveRainData();renderRain();buildRainSummary();
+  saveRainData();renderRain();buildRainSummary();buildRainChart();
   document.getElementById('rain-amount').value='';
   regenDailyTasks();
 }
-function deleteRain(id){rainEntries=rainEntries.filter(e=>e.id!==id);saveRainData();renderRain();buildRainSummary();}
+function deleteRain(id){rainEntries=rainEntries.filter(e=>e.id!==id);saveRainData();renderRain();buildRainSummary();buildRainChart();}
 function renderRain(){
   const c=document.getElementById('rain-entries');
   if(!rainEntries.length){c.innerHTML='<div class="empty-rain">No events logged yet.</div>';return;}
   c.innerHTML='';
   rainEntries.forEach(entry=>{
-    const icon=entry.type==='rain'?'☁️':entry.type==='drip'?'🟢':'💧';
-    const label=entry.type==='rain'?'Rainfall':entry.type==='drip'?'Drip':'Hand watered';
+    const icon=entry.type==='rain'?'☁️':entry.type==='drip'?'🟢':entry.type==='sprinkler'?'💦':'💧';
+    const label=entry.type==='rain'?'Rainfall':entry.type==='drip'?'Drip':entry.type==='sprinkler'?'Sprinkler':'Hand watered';
     const div=document.createElement('div');div.className='rain-row';
     div.innerHTML=`<div class="rain-row-main"><div class="rain-row-date">${entry.date} · ${label}</div><div class="rain-row-val">${icon} ${entry.amount.toFixed(2)}"</div></div><button class="btn-del-rain" onclick="deleteRain(${entry.id})">✕</button>`;
     c.appendChild(div);
@@ -908,126 +1179,253 @@ function renderRain(){
 // ============================================================
 // WEEKLY VIEW
 // ============================================================
-const WEEK_DEFAULTS=[['Walk garden','Soil check'],['Tomato suckers','Aphid spray if needed'],['Coffee grounds','Vine training'],['Rain log review','Worm zone check'],['Urine fert diluted','Strawberry check'],['Ant DE treatment','Full vine audit'],['Compost turn','Plan next week']];
 function buildWeekly(){
   const grid=document.getElementById('week-grid');grid.innerHTML='';
   const todayIdx=now.getDay();
-  WEEK_DEFAULTS.forEach((tasks,i)=>{
+  const dayNames=['sun','mon','tue','wed','thu','fri','sat'];
+
+  // Build day buckets from custom task DB
+  for(let i=0;i<7;i++){
+    const dayKey=dayNames[i];
+    const dayTasks=customTasks.filter(t=>t.freq===dayKey||(t.freq==='weekly'&&i===1)||(t.freq==='daily'));
     const col=document.createElement('div');col.className='day-col'+(i===todayIdx?' today-col':'');
-    col.innerHTML=`<div class="day-header">${DAYS[i].slice(0,3)}</div><div class="day-tasks"><div class="day-task dt-check">${tasks[0]}</div><div class="day-task dt-pest">${tasks[1]}</div></div>`;
+    let taskHTML=dayTasks.slice(0,4).map(t=>{
+      const cls=t.cat==='water'?'dt-water':t.cat==='pest'?'dt-pest':t.cat==='fert'?'dt-fert':t.cat==='weed'?'dt-weed':'dt-check';
+      return`<div class="day-task ${cls}">${t.name.substring(0,28)}</div>`;
+    }).join('');
+    if(!taskHTML)taskHTML='<div class="day-task dt-check" style="opacity:.4">No tasks</div>';
+    col.innerHTML=`<div class="day-header">${DAYS[i].slice(0,3)}</div><div class="day-tasks">${taskHTML}</div>`;
     grid.appendChild(col);
-  });
+  }
+
   const sched=document.getElementById('plant-schedule');sched.innerHTML='';
   plants.forEach(p=>{
     const div=document.createElement('div');div.className='card';
-    div.innerHTML=`<div class="section-label">${p.emoji} ${p.name}</div><div style="font-size:.82rem;line-height:1.7"><b>💧 Water:</b> Every ${p.waterDays} day${p.waterDays>1?'s':''} — ${p.waterAmount}<br><b>🌿 Feed:</b> ${p.feed||'—'}<br><b>🐛 Watch for:</b> ${p.pest||'—'}</div>`;
+    div.innerHTML=`<div class="section-label">${p.emoji} ${p.name}</div><div style="font-size:.82rem;line-height:1.7;color:var(--text-primary)"><b>💧 Water:</b> Every ${p.waterDays} day${p.waterDays>1?'s':''} — ${p.waterAmount}<br><b>🌿 Feed:</b> ${p.feed||'—'}<br><b>🐛 Watch for:</b> ${p.pest||'—'}</div>`;
     sched.appendChild(div);
   });
 }
 
 // ============================================================
-// NOTES
+// TASKS TAB — TASK DB + FERT + WEED + HARVEST + HISTORY
+// ============================================================
+function buildTasksTab(){
+  buildFertList();
+  buildTaskDbList();
+  buildWeedList();
+  buildHarvestList();
+  buildTaskHistoryList();
+}
+
+// --- Custom Tasks ---
+function buildTaskDbList(){
+  const c=document.getElementById('task-db-list');
+  if(!customTasks.length){c.innerHTML='<div class="empty-rain">No custom tasks yet.</div>';return;}
+  c.innerHTML='';
+  const freqLabel={daily:'Daily',weekly:'Weekly',mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun',asneeded:'As Needed'};
+  customTasks.forEach(t=>{
+    const div=document.createElement('div');div.className='task-db-item';
+    const tagCls='tag-'+(t.cat==='fert'?'fert':t.cat==='weed'?'weed':t.cat==='harvest'?'harvest':t.cat);
+    div.innerHTML=`<div class="task-db-info"><div class="task-db-name"><span class="item-tag ${tagCls}">${t.cat}</span> ${t.name}</div><div class="task-db-meta"><span class="freq-badge">${freqLabel[t.freq]||t.freq}</span>${t.note||''}</div></div><div class="task-db-actions"><button class="btn-task-edit" onclick="openEditTask(${t.id})">✏</button><button class="btn-task-del" onclick="deleteTask(${t.id})">✕</button></div>`;
+    c.appendChild(div);
+  });
+}
+function openTaskModal(){editingTaskId=null;document.getElementById('task-modal-title').textContent='Add Task';document.getElementById('task-save-btn').textContent='Save Task';['t-name','t-note'].forEach(id=>document.getElementById(id).value='');document.getElementById('t-cat').value='check';document.getElementById('t-freq').value='weekly';document.getElementById('task-modal-overlay').classList.add('open');}
+function openEditTask(id){
+  const t=customTasks.find(x=>x.id===id);if(!t)return;
+  editingTaskId=id;
+  document.getElementById('task-modal-title').textContent='Edit Task';
+  document.getElementById('task-save-btn').textContent='Save Changes';
+  document.getElementById('t-name').value=t.name;
+  document.getElementById('t-cat').value=t.cat;
+  document.getElementById('t-freq').value=t.freq;
+  document.getElementById('t-note').value=t.note||'';
+  document.getElementById('task-modal-overlay').classList.add('open');
+}
+function closeTaskModal(){document.getElementById('task-modal-overlay').classList.remove('open');}
+function saveTask(){
+  const name=document.getElementById('t-name').value.trim();if(!name){alert('Task name required.');return;}
+  const task={id:editingTaskId||Date.now(),name,cat:document.getElementById('t-cat').value,freq:document.getElementById('t-freq').value,note:document.getElementById('t-note').value.trim()};
+  if(editingTaskId){customTasks=customTasks.map(t=>t.id===editingTaskId?task:t);}else{customTasks.push(task);}
+  saveCustomTasks();closeTaskModal();buildTaskDbList();regenDailyTasks();buildWeekly&&buildWeekly();
+}
+function deleteTask(id){if(!confirm('Delete this task?'))return;customTasks=customTasks.filter(t=>t.id!==id);saveCustomTasks();buildTaskDbList();regenDailyTasks();}
+document.getElementById('task-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeTaskModal();});
+
+// --- Fertilizer Library ---
+function buildFertList(){
+  const c=document.getElementById('fert-list');
+  c.innerHTML='';
+  fertLibrary.forEach(f=>{
+    const div=document.createElement('div');div.className='fert-card';
+    div.innerHTML=`<div class="fert-header"><div class="fert-name">🌿 ${f.name}</div><div class="npk-badge"><span class="npk-n">N ${f.n}</span><span class="npk-p">P ${f.p}</span><span class="npk-k">K ${f.k}</span></div></div><div class="fert-desc">${f.desc}</div><div class="fert-use">Best for: ${f.use}</div><div class="fert-actions"><button class="btn-fert-edit" onclick="openEditFert(${f.id})">✏ Edit</button><button class="btn-fert-del" onclick="deleteFert(${f.id})">Delete</button></div>`;
+    c.appendChild(div);
+  });
+  if(!fertLibrary.length)c.innerHTML='<div class="empty-rain">No fertilizers yet. Add from your library!</div>';
+}
+function openFertModal(){editingFertId=null;document.getElementById('fert-modal-title').textContent='Add Fertilizer';document.getElementById('fert-save-btn').textContent='Save Fertilizer';['f-name','f-n','f-p','f-k','f-use','f-desc'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-type').value='granular';document.getElementById('fert-modal-overlay').classList.add('open');}
+function openEditFert(id){
+  const f=fertLibrary.find(x=>x.id===id);if(!f)return;
+  editingFertId=id;
+  document.getElementById('fert-modal-title').textContent='Edit Fertilizer';
+  document.getElementById('fert-save-btn').textContent='Save Changes';
+  document.getElementById('f-name').value=f.name;
+  document.getElementById('f-n').value=f.n;
+  document.getElementById('f-p').value=f.p;
+  document.getElementById('f-k').value=f.k;
+  document.getElementById('f-type').value=f.type||'granular';
+  document.getElementById('f-use').value=f.use||'';
+  document.getElementById('f-desc').value=f.desc||'';
+  document.getElementById('fert-modal-overlay').classList.add('open');
+}
+function closeFertModal(){document.getElementById('fert-modal-overlay').classList.remove('open');}
+function saveFert(){
+  const name=document.getElementById('f-name').value.trim();if(!name){alert('Fertilizer name required.');return;}
+  const fert={id:editingFertId||Date.now(),name,n:parseFloat(document.getElementById('f-n').value)||0,p:parseFloat(document.getElementById('f-p').value)||0,k:parseFloat(document.getElementById('f-k').value)||0,type:document.getElementById('f-type').value,use:document.getElementById('f-use').value.trim(),desc:document.getElementById('f-desc').value.trim()};
+  if(editingFertId){fertLibrary=fertLibrary.map(f=>f.id===editingFertId?fert:f);}else{fertLibrary.push(fert);}
+  saveFertLibrary();closeFertModal();buildFertList();
+}
+function deleteFert(id){if(!confirm('Delete this fertilizer?'))return;fertLibrary=fertLibrary.filter(f=>f.id!==id);saveFertLibrary();buildFertList();}
+document.getElementById('fert-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeFertModal();});
+
+// --- Weed Log ---
+function buildWeedList(){
+  const c=document.getElementById('weed-list');
+  if(!weedLog.length){c.innerHTML='<div class="empty-rain">No weed events logged yet.</div>';return;}
+  c.innerHTML='';
+  [...weedLog].reverse().forEach(w=>{
+    const div=document.createElement('div');div.className='weed-row';
+    div.innerHTML=`<div class="weed-main"><div class="weed-date">🌾 ${w.date}</div><div class="weed-what">${w.what}</div><div class="weed-action">→ ${w.action}</div>${w.note?`<div class="item-note">${w.note}</div>`:''}</div><button class="btn-del-rain" onclick="deleteWeed(${w.id})">✕</button>`;
+    c.appendChild(div);
+  });
+}
+function openWeedModal(){document.getElementById('w-date').value=now.toISOString().split('T')[0];document.getElementById('w-what').value='';document.getElementById('w-note').value='';document.getElementById('weed-modal-overlay').classList.add('open');}
+function closeWeedModal(){document.getElementById('weed-modal-overlay').classList.remove('open');}
+function saveWeed(){
+  const what=document.getElementById('w-what').value.trim();if(!what){alert('Describe what weeds you found.');return;}
+  weedLog.unshift({id:Date.now(),date:document.getElementById('w-date').value,what,action:document.getElementById('w-action').value,note:document.getElementById('w-note').value.trim()});
+  saveWeedLog();closeWeedModal();buildWeedList();
+}
+function deleteWeed(id){weedLog=weedLog.filter(w=>w.id!==id);saveWeedLog();buildWeedList();}
+document.getElementById('weed-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeWeedModal();});
+
+// --- Harvest Log ---
+function buildHarvestList(){
+  const c=document.getElementById('harvest-list');
+  if(!harvestLog.length){c.innerHTML='<div class="empty-rain">No harvests logged yet. Log your first!</div>';return;}
+  c.innerHTML='';
+  [...harvestLog].reverse().forEach(h=>{
+    const div=document.createElement('div');div.className='harvest-row';
+    div.innerHTML=`<div class="harvest-main"><div class="harvest-date">🍅 ${h.date}</div><div class="harvest-plant">${h.plant}</div><div class="harvest-qty">${h.qty}</div>${h.note?`<div class="item-note">${h.note}</div>`:''}</div><button class="btn-del-rain" onclick="deleteHarvest(${h.id})">✕</button>`;
+    c.appendChild(div);
+  });
+}
+function openHarvestModal(){
+  const sel=document.getElementById('h-plant');
+  sel.innerHTML='';
+  plants.forEach(p=>{const o=document.createElement('option');o.value=p.emoji+' '+p.name;o.textContent=p.emoji+' '+p.name;sel.appendChild(o);});
+  document.getElementById('h-date').value=now.toISOString().split('T')[0];
+  document.getElementById('h-qty').value='';document.getElementById('h-note').value='';
+  document.getElementById('harvest-modal-overlay').classList.add('open');
+}
+function closeHarvestModal(){document.getElementById('harvest-modal-overlay').classList.remove('open');}
+function saveHarvest(){
+  const qty=document.getElementById('h-qty').value.trim();if(!qty){alert('Enter a quantity or weight.');return;}
+  harvestLog.unshift({id:Date.now(),date:document.getElementById('h-date').value,plant:document.getElementById('h-plant').value,qty,note:document.getElementById('h-note').value.trim()});
+  saveHarvestLog();closeHarvestModal();buildHarvestList();
+}
+function deleteHarvest(id){harvestLog=harvestLog.filter(h=>h.id!==id);saveHarvestLog();buildHarvestList();}
+document.getElementById('harvest-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeHarvestModal();});
+
+// --- Task History ---
+function buildTaskHistoryList(){
+  const c=document.getElementById('task-history-list');
+  const keys=Object.keys(taskHistory).sort((a,b)=>new Date(b)-new Date(a)).slice(0,7);
+  if(!keys.length){c.innerHTML='<div class="empty-rain">No task history yet. Complete tasks on the Daily tab!</div>';return;}
+  c.innerHTML='';
+  keys.forEach(day=>{
+    const items=taskHistory[day];
+    const div=document.createElement('div');div.className='history-day';
+    const d=new Date(day);
+    const label=d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+    let html=`<div class="history-day-label">✓ ${label}</div>`;
+    items.forEach(item=>{html+=`<div class="history-item"><span class="history-check">✓</span>${item}</div>`;});
+    div.innerHTML=html;c.appendChild(div);
+  });
+}
+
+// ============================================================
+// NOTES TAB
 // ============================================================
 const notesEl=document.getElementById('garden-notes');
 notesEl.addEventListener('input',()=>localStorage.setItem('gv4_notes',notesEl.value));
 function loadNotes(){notesEl.value=localStorage.getItem('gv4_notes')||'';}
+function stampDate(){
+  const stamp='\n\n──── '+DAYS[now.getDay()]+', '+MONTHS[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear()+' ────\n';
+  const pos=notesEl.selectionStart;
+  notesEl.value=notesEl.value.substring(0,pos)+stamp+notesEl.value.substring(pos);
+  notesEl.selectionStart=notesEl.selectionEnd=pos+stamp.length;
+  notesEl.focus();
+  localStorage.setItem('gv4_notes',notesEl.value);
+}
 
 // ============================================================
 // SETTINGS / LOCATION / ZONE
 // ============================================================
-function openSettings(){document.getElementById('settings-panel').classList.add('open');renderZoneCard();}
+function openSettings(){
+  document.getElementById('settings-panel').classList.add('open');
+  document.getElementById('dark-mode-toggle').checked=darkMode;
+  renderZoneCard();
+}
 function closeSettings(){document.getElementById('settings-panel').classList.remove('open');}
 document.getElementById('settings-panel').addEventListener('click',function(e){if(e.target===this)closeSettings();});
-
 function switchLocTab(id,btn){
   document.querySelectorAll('.loc-tab').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.loc-tab-content').forEach(c=>c.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('loctab-'+id).classList.add('active');
+  btn.classList.add('active');document.getElementById('loctab-'+id).classList.add('active');
 }
-
 function setLocation(city,zone,method){
   userLocation={city,zone,method,updatedAt:new Date().toISOString()};
-  saveLocation();
-  updateHeaderLoc();
-  renderZoneCard();
-  regenDailyTasks();
+  saveLocation();updateHeaderLoc();renderZoneCard();regenDailyTasks();
 }
-
 function renderZoneCard(){
   if(!userLocation){document.getElementById('zone-display-card').style.display='none';return;}
-  const card=document.getElementById('zone-display-card');
-  card.style.display='block';
+  document.getElementById('zone-display-card').style.display='block';
   document.getElementById('zone-big-display').textContent='Zone '+userLocation.zone;
   document.getElementById('zone-city-display').textContent=userLocation.city||'';
   const frost=ZONE_FROST[userLocation.zone]||{};
-  document.getElementById('zone-info-row').innerHTML=`
-    <div class="zone-info-item"><div class="zone-info-label">Last Frost</div><div class="zone-info-val">${frost.last||'—'}</div></div>
-    <div class="zone-info-item"><div class="zone-info-label">First Frost</div><div class="zone-info-val">${frost.first||'—'}</div></div>
-    <div class="zone-info-item"><div class="zone-info-label">Min Temp</div><div class="zone-info-val">${frost.min!==undefined?frost.min+'°F':'—'}</div></div>
-  `;
+  document.getElementById('zone-info-row').innerHTML=`<div class="zone-info-item"><div class="zone-info-label">Last Frost</div><div class="zone-info-val">${frost.last||'—'}</div></div><div class="zone-info-item"><div class="zone-info-label">First Frost</div><div class="zone-info-val">${frost.first||'—'}</div></div><div class="zone-info-item"><div class="zone-info-label">Min Temp</div><div class="zone-info-val">${frost.min!==undefined?frost.min+'°F':'—'}</div></div>`;
 }
-
 function autoLocate(){
-  const btn=document.getElementById('btn-locate');
-  const status=document.getElementById('loc-status-auto');
-  if(!navigator.geolocation){status.textContent='Geolocation not supported in this browser.';return;}
-  btn.disabled=true;
-  btn.textContent='📍 Detecting…';
-  status.textContent='Getting your location…';
-  navigator.geolocation.getCurrentPosition(async(pos)=>{
-    const lat=pos.coords.latitude.toFixed(4);
-    const lng=pos.coords.longitude.toFixed(4);
-    status.textContent='Got coordinates. Looking up zone…';
-    try {
-      const res=await fetch(`https://api.zippopotam.us/us/${encodeURIComponent('')}`).catch(()=>null);
-      // Fallback: use lat/lng to approximate zone
-      const zone=approxZoneByLatLng(lat,lng);
-      const city='Lat '+lat+', Lng '+lng;
-      setLocation(city,zone,'auto');
-      status.textContent='✅ Zone '+zone+' set from your location!';
-    } catch(e){
-      const zone=approxZoneByLatLng(lat,lng);
-      setLocation('Detected Location',zone,'auto');
-      status.textContent='✅ Zone '+zone+' estimated from coordinates.';
-    }
+  const btn=document.getElementById('btn-locate');const status=document.getElementById('loc-status-auto');
+  if(!navigator.geolocation){status.textContent='Geolocation not supported.';return;}
+  btn.disabled=true;btn.textContent='📍 Detecting…';status.textContent='Getting your location…';
+  navigator.geolocation.getCurrentPosition((pos)=>{
+    const lat=pos.coords.latitude.toFixed(4);const lng=pos.coords.longitude.toFixed(4);
+    const zone=approxZoneByLatLng(parseFloat(lat),parseFloat(lng));
+    setLocation('Lat '+lat+', Lng '+lng,zone,'auto');
+    status.textContent='✅ Zone '+zone+' set from your location!';
     btn.disabled=false;btn.textContent='📍 Detect My Location';
-  },(err)=>{
-    status.textContent='Could not detect location. Try entering a zip code.';
-    btn.disabled=false;btn.textContent='📍 Detect My Location';
-  });
+  },(err)=>{status.textContent='Could not detect location. Try a zip code instead.';btn.disabled=false;btn.textContent='📍 Detect My Location';});
 }
-
 function approxZoneByLatLng(lat,lng){
-  // Rough USDA zone estimate by latitude
-  const l=parseFloat(lat);
-  if(l>=60)return'3a';
-  if(l>=55)return'3b';
-  if(l>=50)return'4b';
-  if(l>=47)return'5b';
-  if(l>=44)return'6a';
-  if(l>=41)return'6b';
-  if(l>=38)return'7a';
-  if(l>=36)return'7b';
-  if(l>=33)return'8a';
-  if(l>=30)return'8b';
-  if(l>=27)return'9b';
-  return'10a';
+  // Improved: accounts for longitude (coastal vs inland)
+  const coastal=lng<-115&&lat<45;
+  if(lat>=60)return'3a';if(lat>=55)return'3b';if(lat>=50)return'4b';if(lat>=47)return'5b';
+  if(lat>=44)return coastal?'8b':'6a';
+  if(lat>=41)return coastal?'9a':'6b';
+  if(lat>=38)return coastal?'9b':'7a';
+  if(lat>=36)return coastal?'10a':'7b';
+  if(lat>=33)return coastal?'10b':'8a';
+  if(lat>=30)return'8b';if(lat>=27)return'9b';return'10a';
 }
-
 function lookupZip(){
-  const zip=document.getElementById('zip-input').value.trim();
-  const status=document.getElementById('loc-status-zip');
+  const zip=document.getElementById('zip-input').value.trim();const status=document.getElementById('loc-status-zip');
   if(zip.length!==5||isNaN(zip)){status.textContent='Please enter a 5-digit ZIP code.';return;}
   const zone=lookupZoneByZip(zip);
-  if(zone){
-    setLocation('ZIP '+zip,zone,'zip');
-    status.textContent='✅ Zone '+zone+' set for ZIP '+zip+'!';
-  } else {
-    status.textContent='ZIP not found. Try manual zone entry.';
-  }
+  if(zone){setLocation('ZIP '+zip,zone,'zip');status.textContent='✅ Zone '+zone+' set for ZIP '+zip+'!';}
+  else{status.textContent='ZIP not found. Try manual zone entry.';}
 }
-
 function saveManualLocation(){
   const city=document.getElementById('manual-city').value.trim()||'My Garden';
   const zone=document.getElementById('manual-zone').value;
@@ -1038,106 +1436,11 @@ function saveManualLocation(){
 }
 
 // ============================================================
-// SPROUT OFFLINE AI BOT
+// SPROUT — CLAUDE AI BOT
 // ============================================================
-const SPROUT_KB=[
-  // Watering
-  {keys:['water','watering','dry','drooping','wilt'],ans:(ctx)=>{
-    const rain=ctx.rain24;
-    if(rain>=0.5)return"Your rain log shows "+rain.toFixed(2)+'" in the last 24 hours — skip watering today! Roots need to breathe between waterings. Check soil in 2 days.';
-    return"The finger test is your best guide: push your finger 2–3 inches into the soil near the root zone. If it's dry at that depth, water deeply at the base until it flows from the bottom. "+ctx.plants.filter(p=>p.status==='growing').map(p=>p.emoji+' '+p.name+' likes watering every '+p.waterDays+' days').join('; ')+'.';
-  }},
-  {keys:['yellow','yellowing','yellow leaves'],ans:(ctx)=>{
-    return"Yellow leaves have several common causes: (1) Overwatering — most likely if soil stays wet. Allow top 2–3\" to dry between waterings. (2) Nitrogen deficiency — try a balanced or nitrogen-heavy fertilizer. (3) Pest damage — check under leaves for aphids or spider mites. (4) Natural aging — lower leaves naturally yellow first, especially on tomatoes. Which plant is affected?";
-  }},
-  {keys:['curl','curling','rolling','leaf curl'],ans:(ctx)=>{
-    return"Leaf curling usually means one of three things: (1) Heat stress — leaves cup inward to reduce surface area and water loss. Normal on hot afternoons; they should recover by morning. (2) Overwatering or root problems — check drainage. (3) Virus or pest feeding — check undersides for aphids, thrips, or spider mites. If only tomatoes, inward curling is often just heat response.";
-  }},
-  {keys:['aphid','aphids','bug','bugs','pest','pests','insect'],ans:(ctx)=>{
-    return"For aphids: (1) Blast with a strong stream of water to knock them off — very effective on tomatoes and peppers. (2) Spray with diluted neem oil (1 tbsp per quart of water) in the evening. (3) Sprinkle diatomaceous earth around the base — ants farm aphids, so cutting off ants helps a lot. (4) Introduce or attract ladybugs and lacewings. Check your plants daily — catching them early makes all the difference.";
-  }},
-  {keys:['tomato','tomatoes'],ans:(ctx)=>{
-    const t=ctx.plants.find(p=>p.name.toLowerCase().includes('tomato'));
-    if(t)return"Your "+t.emoji+" "+t.name+" ("+t.variety+"): water every "+t.waterDays+" days with "+t.waterAmount+". "+t.feed+". Watch for: "+t.pest+". "+t.notes;
-    return"Tomatoes love full sun and deep, consistent watering — 1 to 1.5 inches per week at the base. Remove suckers in the leaf axils to keep energy focused on fruit. Stake or cage early. The most common problems are blossom end rot (inconsistent watering) and hornworms (hand-pick at night). What do you need to know?";
-  }},
-  {keys:['pepper','peppers'],ans:(ctx)=>{
-    const p=ctx.plants.find(p=>p.name.toLowerCase().includes('pepper'));
-    if(p)return"Your "+p.emoji+" "+p.name+": water every "+p.waterDays+" days. "+p.feed+". Watch for: "+p.pest+". "+p.notes;
-    return"Peppers like full sun and 1 inch of water per week. Don't over-fertilize with nitrogen once they're flowering — it pushes leaf growth at the expense of fruit. Pinch the very first flower buds if your plant is small, so it puts energy into growing larger first. Hot peppers actually prefer slightly drier soil.";
-  }},
-  {keys:['cucumber','cucumbers'],ans:(ctx)=>{
-    const c=ctx.plants.find(p=>p.name.toLowerCase().includes('cucumber'));
-    if(c)return"Your "+c.emoji+" "+c.name+": water every "+c.waterDays+" days — "+c.waterAmount+". "+c.notes;
-    return"Cucumbers need consistent moisture — they're prone to bitterness if they dry out. Water 1 inch per week, keep soil evenly moist. Train vines daily; they move fast in warm weather. Harvest at 6–8 inches for best flavor — leaving overripe cucumbers on the vine signals the plant to stop producing.";
-  }},
-  {keys:['strawberry','strawberries'],ans:(ctx)=>{
-    return"Strawberries need 1–1.5 inches of water per week — water at the base, not the crown or leaves (this causes crown rot). Mulch with straw to keep fruit clean and retain moisture. Pick ripe berries promptly; leaving overripe fruit attracts pests and fungal issues. Runners can be pinned to propagate new plants, or cut if you want the mother plant to fruit more heavily.";
-  }},
-  {keys:['fertilize','fertilizer','feed','feeding','compost','nutrients'],ans:(ctx)=>{
-    return"General fertilizing tips: (1) Seedlings/early growth: balanced fertilizer (10-10-10) every 2–3 weeks. (2) Flowering and fruiting plants (tomatoes, peppers): switch to low-nitrogen, higher phosphorus and potassium. (3) Leafy greens: nitrogen-heavy is good. (4) Organic options: compost tea, fish emulsion, worm castings — all excellent mid-season. Never fertilize drought-stressed plants. Water first, fertilize next day.";
-  }},
-  {keys:['soil','dirt','amendment','mulch'],ans:(ctx)=>{
-    return"Healthy garden soil: aim for loose, dark, well-draining soil with lots of organic matter. Add 2–4 inches of compost each season. Mulch with 2–3 inches of straw, wood chips, or leaf mulch to conserve moisture and regulate soil temperature — it can keep roots 10°F cooler in summer. Coffee grounds are a gentle soil acidifier and nitrogen source. Worm castings are one of the best amendments you can add.";
-  }},
-  {keys:['zone','hardiness','frost','freeze','last frost','first frost'],ans:(ctx)=>{
-    if(ctx.zone){
-      const frost=ZONE_FROST[ctx.zone]||{};
-      return"You're in Zone "+ctx.zone+". Your average last frost is around "+frost.last+" and first fall frost around "+frost.first+". Minimum winter temperature is around "+frost.min+"°F. Warm-season crops (tomatoes, peppers, cucumbers, basil) should not go outside until after last frost. Cool-season crops (lettuce, spinach, kale, peas) can handle frost down to about 28°F.";
-    }
-    return"Set your location in Settings (⚙️) and I can give you specific frost dates and planting windows for your zone! Generally: warm-season crops (tomatoes, peppers, cucumbers) go out after last frost. Cool-season crops (lettuce, kale, spinach, peas) can handle light frost.";
-  }},
-  {keys:['plant','planting','when to plant','can i plant'],ans:(ctx)=>{
-    const season=ctx.season;
-    const zone=ctx.zone;
-    if(season==='spring')return"It's spring — prime time for warm-season planting! "+(zone?'In Zone '+zone+', ':'')+' start tomatoes, peppers, cucumbers, squash, and basil transplants outdoors after your last frost date. Direct sow beans, corn, and squash once soil is 60°F+. Cool-season crops like lettuce, spinach, and kale can go in now or earlier.';
-    if(season==='summer')return"Mid-summer: focus on maintaining warm-season crops. You can still direct sow fast crops like radishes, bush beans, and succession lettuce. In late summer (August), start planning your fall garden — sow kale, broccoli, spinach 8–10 weeks before first frost.";
-    if(season==='fall')return"Fall is excellent for cool-season crops — kale, spinach, lettuce, broccoli, and peas all thrive. Plant garlic in October/November for next summer. Protect tender warm-season crops from frost with row cover.";
-    return"Winter is a great time to plan your garden! Order seeds, amend soil, and start planning successions. Some cold-hardy greens (kale, spinach) can survive light frost under row cover.";
-  }},
-  {keys:['blossom end rot','ber','black bottom'],ans:()=>{
-    return"Blossom end rot on tomatoes and peppers is caused by calcium deficiency — but usually the soil has plenty of calcium. The real cause is inconsistent watering, which prevents calcium uptake. Fix: (1) Water deeply and consistently — never let soil dry out completely then soak. (2) Mulch heavily to retain moisture. (3) Calcium spray (calcium chloride) on foliage as a quick fix. (4) Avoid over-fertilizing with high nitrogen. Remove affected fruit — it won't recover but healthy ones will follow.";
-  }},
-  {keys:['powdery mildew','mildew','white powder','white spots'],ans:()=>{
-    return"Powdery mildew is a fungal disease — white powdery coating on leaves. It thrives in warm days + cool nights and poor air circulation. Treatment: (1) Remove badly affected leaves. (2) Spray with diluted baking soda solution (1 tsp baking soda + 1 tsp dish soap per quart of water). (3) Neem oil spray works well. (4) Improve air circulation by pruning crowded growth. Prevention: avoid overhead watering.";
-  }},
-  {keys:['hornworm','tomato worm','caterpillar','worm'],ans:()=>{
-    return"Tomato hornworms are big green caterpillars — they can strip a plant overnight! Look for dark droppings (frass) on leaves first, then trace up to find the worm (they blend in perfectly). Hand-pick them off — they're harmless to touch. If you see white cocoons on their backs, those are braconid wasp eggs — leave that hornworm alone, the wasps are your allies. Tilling soil in fall kills overwintering pupae.";
-  }},
-  {keys:['compost','composting'],ans:()=>{
-    return"Composting basics: mix 'browns' (dead leaves, cardboard, straw — carbon) with 'greens' (food scraps, grass clippings, coffee grounds — nitrogen) in roughly 3:1 ratio. Keep it moist but not wet. Turn every 1–2 weeks for faster decomposition. Ready in 2–6 months — looks like dark crumbly soil and smells like earth. Great additions: eggshells (calcium), wood ash (potassium, raises pH slightly), worm castings. Avoid: meat, dairy, diseased plants.";
-  }},
-  {keys:['basil','herb','herbs'],ans:(ctx)=>{
-    return"Basil loves heat and full sun (6+ hours). Water consistently at the base — wet leaves cause black spots. Pinch flowers as soon as they appear to keep leaves producing. The plant is signaling it's done producing when it bolts — pinching buds resets it. Basil is cold-sensitive; bring it in or harvest fully when temps drop below 50°F at night. Great companion to tomatoes — plant nearby.";
-  }},
-  {keys:['hello','hi','hey','help'],ans:(ctx)=>{
-    const pnames=ctx.plants.map(p=>p.emoji+' '+p.name).join(', ');
-    return"Hello! I'm Sprout, your offline garden assistant 🌱 I know your garden has: "+pnames+". Ask me anything — watering questions, pest problems, what to plant, zone advice, or general care tips. I'm all local, no internet needed!";
-  }},
-  {keys:['what can you','what do you know','what questions'],ans:()=>{
-    return"I can help with: 💧 Watering schedules & when to skip watering · 🐛 Pest identification & treatment · 🌡️ Zone & frost date questions · 🌱 When to plant & what to plant in each season · 🍅 Specific crop care tips · 🌿 Fertilizing & soil health · 🍄 Disease diagnosis (powdery mildew, blossom end rot, etc.) · 📋 General garden advice. Just ask!";
-  }},
-  {keys:['rain','rained','rainfall'],ans:(ctx)=>{
-    const r7=ctx.rain7;
-    const r24=ctx.rain24;
-    return"Your rain log shows: "+r24.toFixed(2)+'" in the last 24 hours and '+r7.toFixed(2)+'" in the last 7 days. '+(r24>=0.5?'Skip watering today — soil is likely well-hydrated.':r24>0?'Light rain recently — do a finger test before watering.':'No rain logged recently. Check soil moisture and water if dry 2–3" down.');
-  }},
-];
-
-function sproutAnswer(msg,ctx){
-  const lower=msg.toLowerCase();
-  for(const entry of SPROUT_KB){
-    if(entry.keys.some(k=>lower.includes(k))){
-      return typeof entry.ans==='function'?entry.ans(ctx):entry.ans;
-    }
-  }
-  // Fallback
-  return"Great question! I'm not sure about that specific topic, but here's what I'd suggest: check your plant's leaves (top and bottom), soil moisture at 2–3\" depth, and look for any pest activity. If you describe what you're seeing, I can help diagnose it — yellowing, spots, wilting, or growth issues all point to different causes.";
+function buildSproutContext(){
+  return{plants,zone:userLocation?userLocation.zone:null,season:getSeason(),rain24:getRecentRainInches(1),rain7:getRecentRainInches(7),fertLibrary,customTasks,weedLog,harvestLog};
 }
-
-let sproutMsgs=[];
-let sproutGreeted=false;
-
 function openSprout(){
   document.getElementById('sprout-panel').classList.add('open');
   document.getElementById('sprout-unread').classList.remove('show');
@@ -1145,99 +1448,102 @@ function openSprout(){
     sproutGreeted=true;
     const ctx=buildSproutContext();
     const pnames=plants.map(p=>p.emoji+' '+p.name).join(', ');
-    const rain24=ctx.rain24;
-    let greeting="Hey there! I'm Sprout 🌱 Your offline garden assistant. I know your garden has: "+pnames+".";
-    if(rain24>=0.5)greeting+="\n\nQuick heads up — you've logged "+rain24.toFixed(2)+'" of rain in the last 24 hours. You can probably skip watering today!';
-    else if(plants.length>0){
-      const dueWater=plants.filter(p=>p.waterDays<=2).map(p=>p.name);
-      if(dueWater.length>0)greeting+="\n\nRemember that "+dueWater.join(' and ')+" like watering every 1–2 days — check soil moisture this morning!";
-    }
-    greeting+="\n\nAsk me anything — watering, pests, zone questions, or what to plant next.";
+    let greeting='Hey! I\'m Sprout 🌱 — your AI garden assistant, powered by Claude.\n\nYour garden has: '+pnames+'.';
+    if(ctx.rain24>=0.5)greeting+='\n\nQuick note — you\'ve logged '+ctx.rain24.toFixed(2)+'" of rain in the last 24 hours. Probably skip watering today!';
+    greeting+='\n\nAsk me anything — watering, pests, fertilizer advice, what to plant, or anything you see in your garden.';
     addBotMsg(greeting);
-    setSproutSuggestions(['💧 When should I water?','🐛 Aphid treatment','🌡️ My frost dates','🍅 Tomato tips','🌿 What to plant now']);
+    setSproutSuggestions(['💧 When should I water?','🌿 Fertilizer for tomatoes','🐛 Aphid treatment','🌱 What to plant now','🍅 Harvest tips']);
   }
   setTimeout(()=>document.getElementById('sprout-msgs').scrollTop=99999,100);
 }
 function closeSprout(){document.getElementById('sprout-panel').classList.remove('open');}
 document.getElementById('sprout-panel').addEventListener('click',function(e){if(e.target===this)closeSprout();});
 
-function buildSproutContext(){
-  return{
-    plants,
-    zone:userLocation?userLocation.zone:null,
-    season:getSeason(),
-    rain24:getRecentRainInches(1),
-    rain7:getRecentRainInches(7),
-  };
-}
-
 function addBotMsg(text){
   const msgs=document.getElementById('sprout-msgs');
-  const now2=new Date();
-  const timeStr=now2.getHours()+':'+String(now2.getMinutes()).padStart(2,'0');
+  const now2=new Date();const timeStr=now2.getHours()+':'+String(now2.getMinutes()).padStart(2,'0');
   const div=document.createElement('div');div.className='msg bot';
   div.innerHTML=`<div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div><div class="msg-time">Sprout · ${timeStr}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
 }
 function addUserMsg(text){
   const msgs=document.getElementById('sprout-msgs');
-  const now2=new Date();
-  const timeStr=now2.getHours()+':'+String(now2.getMinutes()).padStart(2,'0');
+  const now2=new Date();const timeStr=now2.getHours()+':'+String(now2.getMinutes()).padStart(2,'0');
   const div=document.createElement('div');div.className='msg user';
   div.innerHTML=`<div class="msg-bubble">${text}</div><div class="msg-time">${timeStr}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
 }
 
-function sendSproutMsg(text){
+async function sendSproutMsg(text){
   const input=document.getElementById('sprout-input');
-  const msg=(text||input.value).trim();
-  if(!msg)return;
+  const msg=(text||input.value).trim();if(!msg)return;
   input.value='';
   addUserMsg(msg);
-  // Typing indicator
+
   const msgs=document.getElementById('sprout-msgs');
   const typing=document.createElement('div');typing.className='msg bot';typing.id='sprout-typing';
   typing.innerHTML=`<div class="msg-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
   msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;
-  setTimeout(()=>{
+
+  const ctx=buildSproutContext();
+  const systemPrompt=`You are Sprout, a friendly and knowledgeable garden assistant embedded in a personal garden app. You have access to the user's garden data below. Give concise, practical advice tailored to their specific plants, zone, and season. Use emoji sparingly but naturally. Keep responses under 200 words unless a detailed explanation is truly needed.
+
+Garden Data:
+- Plants: ${JSON.stringify(plants.map(p=>({name:p.name,emoji:p.emoji,variety:p.variety,waterDays:p.waterDays,feed:p.feed,pest:p.pest,status:p.status})))}
+- USDA Zone: ${ctx.zone||'unknown'}
+- Current Season: ${ctx.season}
+- Rain last 24h: ${ctx.rain24.toFixed(2)}"
+- Rain last 7 days: ${ctx.rain7.toFixed(2)}"
+- Fertilizer library: ${ctx.fertLibrary.map(f=>f.name+' (N'+f.n+'-P'+f.p+'-K'+f.k+')').join(', ')||'none set'}
+- Recent harvests: ${ctx.harvestLog.slice(0,3).map(h=>h.plant+' '+h.qty).join(', ')||'none logged'}`;
+
+  sproutConvHistory.push({role:'user',content:msg});
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:systemPrompt,
+        messages:sproutConvHistory
+      })
+    });
+    const data=await resp.json();
+    const answer=(data.content&&data.content[0]&&data.content[0].text)||'I had trouble responding. Try again!';
+    sproutConvHistory.push({role:'assistant',content:answer});
     const t=document.getElementById('sprout-typing');if(t)t.remove();
-    const ctx=buildSproutContext();
-    const ans=sproutAnswer(msg,ctx);
-    addBotMsg(ans);
-    setSproutSuggestions(['💧 Watering schedule','🐛 Pest help','🌡️ Zone info','🌱 What to plant','💚 Soil tips']);
-  },600+Math.random()*400);
+    addBotMsg(answer);
+  }catch(err){
+    const t=document.getElementById('sprout-typing');if(t)t.remove();
+    addBotMsg('I\'m having trouble connecting right now. Check your connection and try again.');
+  }
+  setSproutSuggestions(['💧 Watering schedule','🐛 Pest help','🌿 Fertilizer advice','🌱 What to plant','💚 Soil tips']);
 }
 
 function setSproutSuggestions(chips){
-  const el=document.getElementById('sprout-suggs');
-  el.innerHTML='';
+  const el=document.getElementById('sprout-suggs');el.innerHTML='';
   chips.forEach(c=>{
-    const btn=document.createElement('button');
-    btn.className='sugg-chip';
-    btn.textContent=c;
-    btn.onclick=()=>sendSproutMsg(c.replace(/^[^ ]+ /,''));
-    el.appendChild(btn);
+    const btn=document.createElement('button');btn.className='sugg-chip';btn.textContent=c;
+    btn.onclick=()=>sendSproutMsg(c);el.appendChild(btn);
   });
+}
+
+// ============================================================
+// BUILD ALL
+// ============================================================
+function buildAll(){
+  updateHeaderLoc();buildHeaderPills();buildPlantList();buildRainSummary();buildRainChart();renderRain();regenDailyTasks();loadNotes();applyDarkMode();
 }
 
 // ============================================================
 // INIT
 // ============================================================
 document.getElementById('rain-date').value=now.toISOString().split('T')[0];
-updateHeaderLoc();
-buildHeaderPills();
-buildPlantList();
-buildRainSummary();
-renderRain();
-regenDailyTasks();
-loadNotes();
+buildAll();
 
-// Show Sprout unread dot after a delay if user hasn't opened it
-setTimeout(()=>{
-  if(!sproutGreeted)document.getElementById('sprout-unread').classList.add('show');
-},3000);
+setTimeout(()=>{if(!sproutGreeted)document.getElementById('sprout-unread').classList.add('show');},3000);
 </script>
 </body>
 </html>
