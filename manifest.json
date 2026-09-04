@@ -1,0 +1,11 @@
+{
+  "name": "Garden AI",
+  "short_name": "Garden AI",
+  "description": "Personal garden dashboard with live weather, rain-aware watering, plant tracking, tasks and journal.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0c110d",
+  "theme_color": "#11180f",
+  "orientation": "portrait",
+  "icons": []
+}
