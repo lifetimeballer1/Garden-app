@@ -1,11 +1,1 @@
-{
-  "name": "Garden AI",
-  "short_name": "Garden AI",
-  "description": "Personal garden dashboard with live weather, rain-aware watering, plant tracking, tasks and journal.",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#0c110d",
-  "theme_color": "#11180f",
-  "orientation": "portrait",
-  "icons": []
-}
+{"background_color":"#0c110d","categories":["lifestyle","utilities"],"description":"Personal garden dashboard with live weather, rain-aware watering, plant tracking, tasks and journal. Works offline.","dir":"ltr","display":"standalone","icons":[{"purpose":"any","sizes":"192x192","src":"icon-192.png","type":"image/png"},{"purpose":"any","sizes":"512x512","src":"icon-512.png","type":"image/png"},{"purpose":"maskable","sizes":"512x512","src":"icon-512.png","type":"image/png"},{"purpose":"any","sizes":"any","src":"icon.svg","type":"image/svg+xml"}],"id":"./index.html","lang":"en","name":"Garden AI","orientation":"portrait","prefer_related_applications":false,"scope":"./","short_name":"Garden AI","start_url":"./index.html","theme_color":"#11180f"}
